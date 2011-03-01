@@ -1,0 +1,23 @@
+#!/usr/bin/python
+
+from __future__ import print_function
+
+from os import mkdir, symlink
+from os.path import dirname, exists, expanduser, islink, join, realpath
+import sys
+
+srcdir = realpath(dirname(sys.argv[0]))
+dstdir = join(expanduser("~"), 'noname')
+
+if exists(dstdir) or islink(dstdir):
+    print("Will not install: %s exists" % dstdir, file=sys.stderr)
+    sys.exit(2)
+
+mkdir(dstdir)
+
+for name in 'namepoll templates uploaded_images'.split():
+    src, dst = (join(_dir, name) for _dir in (srcdir, dstdir))
+    symlink(src, dst)
+
+sys.exit(0)
+
