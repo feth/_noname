@@ -1,0 +1,9 @@
+{% if all_proposed_names.all %}
+    <ul>
+    {% for name in all_proposed_names.all %}
+        <li><a href="/noname/{{ name.id }}/">{{ name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No proposed company names are available.</p>
+{% endif %}

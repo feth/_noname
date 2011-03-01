@@ -1,0 +1,6 @@
+<h1>{{ companyname }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% load djangoratings %}
+Your vote: {% rating_by_request request on instance.field as vote %}
+
