@@ -6,7 +6,7 @@ I'm not sure this project is of interest for anyone but a few persons. This is m
 depends
 -------
 
-* djangoratings https://github.com/dcramer/django-ratings
+* django-ratings https://github.com/dcramer/django-ratings (ou PyPI)
 * django 1.3 beta
 
 basic setup
