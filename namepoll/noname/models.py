@@ -1,3 +1,5 @@
+from os.path import expanduser
+
 from django.db import models
 
 class CompanyName(models.Model):
@@ -6,7 +8,7 @@ class CompanyName(models.Model):
     image = models.ImageField(
         blank=True,
         max_length=1024,
-        upload_to='/home/fethdjango/uploaded_images/'
+        upload_to=expanduser('~/noname/uploaded_images/')
         )
 
     def __unicode__(self):
