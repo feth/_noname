@@ -1,0 +1,8 @@
+[ ] add names in admin interface, with optional image and explanation
+[ ] view names
+[ ] explanation and image foldable, and folded by default
+[ ] simple poll with djangoratings
+[ ] add a "comment" field
+[ ] add an information field that belongs to the http session and to all its votes: "Would you be so kind as to input some data about you? (job, interests, age, anything you wish)
+[ ] internationalize, at least french.
+
