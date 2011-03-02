@@ -1,5 +1,5 @@
 from django.db import models
-from djangoratings import RatingField
+from djangoratings.fields import RatingField
 
 
 class CompanyName(models.Model):
