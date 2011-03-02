@@ -97,8 +97,6 @@ INSTALLED_APPS = (
      'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    # https://github.com/dcramer/django-ratings
-    'djangoratings',
     #my app
     'noname',
 

@@ -1,6 +1,4 @@
 from django.db import models
-from djangoratings.fields import RatingField
-
 
 class CompanyName(models.Model):
     name = models.CharField(max_length=200)
@@ -10,19 +8,13 @@ class CompanyName(models.Model):
         max_length=1024,
         upload_to='/home/fethdjango/uploaded_images/'
         )
-    rating = RatingField(
-        range=3,
-        can_change_vote=True,
-        allow_anonymous=True,
-        use_cookies=True,
-        )
 
     def __unicode__(self):
         return self.name
 
 
 class Voter(models.Model):
-    ip_address = models.IPAddressField()
+    optionnal_info = models.TextField()
 
 
 class Vote(models.Model):
@@ -38,5 +30,4 @@ class Vote(models.Model):
     value = models.IntegerField(choices=VOTE_CHOICES)
     additionnal_remarks = models.TextField()
 
-import djangoratings.templatetags.ratings
 
