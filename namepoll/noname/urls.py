@@ -11,5 +11,6 @@ urlpatterns = patterns('',
     (r'^(?P<pk>\d+)/$',
      DetailView.as_view(
          model=CompanyName,
+         context_object_name='companyname',
          template_name='noname/detail.html')),
 )
