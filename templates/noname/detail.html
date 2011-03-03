@@ -1,4 +1,8 @@
-<h1>{{ companyname }}</h1>
-
+{% include "noname/header.html" with title=companyname.name %}
+<div id="contents" style="float: left; width: 50em; border: thin silver solid; margin: 0.5em; padding: 0.5em;">
+<h1>{{ companyname.name }}</h1>
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
+</div>
+{% include "noname/sessioninfo.html" %}
+{% include "noname/nav.html" %}
+{% include "noname/footer.html" %}

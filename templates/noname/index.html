@@ -1,10 +1,6 @@
-<html>
-<head>
-<title>Noname corp.</title>
-</head>
-<body>
+{% include "noname/header.html" with title="Noname corp." %}
 <div id="contents" style="float: left; width: 50em; border: thin silver solid; margin: 0.5em; padding: 0.5em;">
-<p>content</p>
+<h1>Proposed names</h1>
 {% if all_proposed_names.all %}
     <ul>
     {% for name in all_proposed_names.all %}
@@ -16,6 +12,5 @@
 {% endif %}
 </div>
 {% include "noname/sessioninfo.html" %}
-{% include "noname/nav.html" %}
-</body>
-</html>
+{% include "noname/nav.html" with skip="index"%}
+{% include "noname/footer.html" %}
