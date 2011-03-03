@@ -1,3 +1,10 @@
+<html>
+<head>
+<title>Noname corp.</title>
+</head>
+<body>
+<div id="contents" style="float: left; width: 50em; border: thin silver solid; margin: 0.5em; padding: 0.5em;">
+<p>content</p>
 {% if all_proposed_names.all %}
     <ul>
     {% for name in all_proposed_names.all %}
@@ -7,3 +14,8 @@
 {% else %}
     <p>No proposed company names are available.</p>
 {% endif %}
+</div>
+{% include "noname/sessioninfo.html" %}
+{% include "noname/nav.html" %}
+</body>
+</html>
