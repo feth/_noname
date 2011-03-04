@@ -6,4 +6,7 @@
 {% else %}
 <span><a href="/">All proposed names</a></span>
 {% endif %}
+{% if not "next" in skip %}
+<span><a href="/noname/next">Show another name</a></span>
+{% endif %}
 </div>

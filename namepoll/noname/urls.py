@@ -8,11 +8,12 @@ urlpatterns = patterns('',
          queryset=CompanyName.objects,
          context_object_name='all_proposed_names',
          template_name='noname/index.html')),
-    (r'^(?P<pk>[^/]+)/$',
+    (r'^detail/(?P<pk>[^/]+)/$',
      DetailView.as_view(
          model=CompanyName,
          context_object_name='companyname',
          template_name='noname/detail.html')),
+    (r'^next/$', 'noname.views.next'),
     #FIXME: VERY DIRTY: I just wanna serve jquery.js
     #but I don't have internet access to see how to serve
     #static files
