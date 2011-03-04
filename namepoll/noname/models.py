@@ -2,14 +2,20 @@ from os.path import expanduser
 
 from django.db import models
 
+
 class CompanyName(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, primary_key=True)
     explanation = models.TextField()
     image = models.ImageField(
         blank=True,
         max_length=1024,
         upload_to=expanduser('~/noname/uploaded_images/')
-        )
+    )
+    free_brand = models.BooleanField('Brand is free')
+    free_dotnet = models.BooleanField('.net is free')
+    free_dotcom = models.BooleanField('.com is free')
+    free_dotfr = models.BooleanField('.fr is free')
+
 
     def __unicode__(self):
         return self.name
