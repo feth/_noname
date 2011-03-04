@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import patterns
+from django.conf.urls.defaults import include, patterns
 from django.views.generic import DetailView, ListView
 from noname.models import CompanyName
 
@@ -13,6 +13,7 @@ urlpatterns = patterns('',
          model=CompanyName,
          context_object_name='companyname',
          template_name='noname/detail.html')),
+    (r'^comments/', include('django.contrib.comments.urls')),
     (r'^next/$', 'noname.views.next'),
     #FIXME: VERY DIRTY: I just wanna serve jquery.js
     #but I don't have internet access to see how to serve
