@@ -8,7 +8,7 @@ urlpatterns = patterns('',
          queryset=CompanyName.objects,
          context_object_name='all_proposed_names',
          template_name='noname/index.html')),
-    (r'^(?P<pk>\d+)/$',
+    (r'^(?P<pk>[^/]+)/$',
      DetailView.as_view(
          model=CompanyName,
          context_object_name='companyname',
