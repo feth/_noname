@@ -12,13 +12,21 @@ class CompanyName(models.Model):
         upload_to=expanduser('~/noname/uploaded_images/')
     )
     free_brand = models.BooleanField('Brand is free')
-    free_dotnet = models.BooleanField('.net is free')
     free_dotcom = models.BooleanField('.com is free')
     free_dotfr = models.BooleanField('.fr is free')
+    free_dotnet = models.BooleanField('.net is free')
 
 
     def __unicode__(self):
         return self.name
+
+    def _availability(self):
+        yield 'brand (INPI)', self.free_brand
+        yield '.com TLD', self.free_dotcom
+        yield '.fr TLD', self.free_dotfr
+        yield '.net TLD ', self.free_dotnet
+
+    availability = property(fget=_availability)
 
 
 class Voter(models.Model):
