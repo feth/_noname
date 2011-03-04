@@ -1,5 +1,5 @@
 {% include "noname/header.html" with title=companyname.name %}
-<div id="contents" >
+<div class="content" >
 <h1 id="name">{{ companyname.name }}</h1>
 
 <div class="contentbox" id="explanation">
@@ -7,7 +7,7 @@
 	<div class="foldable" id="text_explanation">
 	<p>{{ companyname.explanation }}</p>
 	</div>
-</div>
+</div><!--#explanation-->
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
@@ -23,8 +23,48 @@
 	{% endfor %}
 	</table>
 	</div>
-</div>
+</div><!--#availtitle-->
 
+<div class="contentbox" id="illustitle">
+	<p class="trigger" id="show_illus">[+] Illustration</p>
+	<div class="foldable" id="illustration">
+	<img src="data:image/png;base64,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"/>
+
+</div><!--#illustitle-->
+
+
+
+</div>
+<div id="comments" style="display:block; text-align:left;">
+	{% load comments %}
+	{% render_comment_form for companyname %}
+</div>
 </div>
 {% include "noname/sessioninfo.html" %}
 {% include "noname/nav.html" %}

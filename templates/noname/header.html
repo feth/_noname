@@ -26,11 +26,33 @@ $(document).ready(function(){
             show_avail = true;
         }
     });
+   var show_nav = true;
+    $("#show_nav").click(function(){
+        $("#navigation").slideToggle("slow");
+        if (show_nav) {
+            $("#show_nav").text("[+] Navigation");
+            show_nav = false;
+        } else {
+            $("#show_nav").text("[-] Navigation");
+            show_nav = true;
+        }
+    });
+   var show_illus = true;
+    $("#show_illus").click(function(){
+        $("#illustration").slideToggle("slow");
+        if (show_illus) {
+            $("#show_illus").text("[+] Illustration");
+            show_illus = false;
+        } else {
+            $("#show_illus").text("[-] Illustration");
+            show_illus = true;
+        }
+    });
 });
 </script>
 
 <style type="text/css">
-div#contents
+div.content
 {
 float: left;
 border: thin silver solid;
@@ -52,6 +74,12 @@ padding:5px;
 background:#e5eecc;
 border:solid 1px #c3c3c3;
 }
+.trigger:hover
+{
+background:#ffffff;
+border:solid 1px #000;
+cursor:pointer;
+}
 div#explanation
 {
 width: 30em;
@@ -60,9 +88,12 @@ div#availtitle
 {
 width: 10em;
 }
-div#text_explanation
+div#nav
 {
-height:120px;
+width: 13em;
+}
+div#text_explanation,div#illustration
+{
 display:none;
 }
 td.avail,td.unavail

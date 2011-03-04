@@ -1,12 +1,16 @@
-<div id="nav" style="float: right; width: 30%; border: thin silver solid; margin: 0.5em; padding: 0.5em;">
-<p>navigation</p>
-<span><a href="/admin">admin</a></span>
+<div class="content" id="nav">
+<p class="trigger" id="show_nav">[+] Navigation</p>
+<div class="foldable" id="navigation">
 {% if "index" in skip %}
-<b>All proposed names</b>
+<span style="display:block; border: solid 1px;" title="You are here">All proposed names</span>
 {% else %}
-<span><a href="/">All proposed names</a></span>
+<span style="display:block;"><a href="/" title="See all proposed names in line">All proposed names</a></span>
 {% endif %}
 {% if not "next" in skip %}
-<span><a href="/noname/next">Show another name</a></span>
+<span style="display:block;"><a href="/noname/next" title="See an other proposed name">Show another name</a></span>
+{% else %}
+<span style="display:block;"><a href="/noname/next" title="See a random proposed name">Show another name</a></span>
 {% endif %}
+<span style="display:block;"><a href="/admin" title="This is where admins go">admin</a></span>
+</div>
 </div>
