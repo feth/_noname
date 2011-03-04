@@ -1,8 +1,19 @@
 {% include "noname/header.html" with title=companyname.name %}
 <div id="contents" style="float: left; width: 50em; border: thin silver solid; margin: 0.5em; padding: 0.5em;">
 <h1>{{ companyname.name }}</h1>
+<div class="explanation">
+<p class="flip">Show/Hide explanation</p>
+<div class="foldable">
+<p>{{ companyname.explanation }}</p>
+</div>
+</div>
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 </div>
 {% include "noname/sessioninfo.html" %}
 {% include "noname/nav.html" %}
 {% include "noname/footer.html" %}
+
+
+
+
+

@@ -1,5 +1,36 @@
 <html>
 <head>
+
+<script type="text/javascript" src="/noname/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+        $(".flip").click(function(){
+            $(".foldable").slideToggle("slow");
+            $(".flip").text("Hide explanation")
+            });
+        });
+</script>
+
+<style type="text/css">
+div.explanation
+{
+float: left;
+width: 100%;
+}
+div.foldable,p.flip
+{
+margin:0px;
+padding:5px;
+	text-align:center;
+background:#e5eecc;
+border:solid 1px #c3c3c3;
+}
+div.foldable
+{
+height:120px;
+display:none;
+}
+</style>
 <title>{{ title }}</title>
 </head>
 <body>
