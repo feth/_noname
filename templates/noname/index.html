@@ -4,7 +4,7 @@
 {% if all_proposed_names.all %}
     <ul>
     {% for name in all_proposed_names.all %}
-        <li><a href="/noname/{{ name.id }}/">{{ name }}</a></li>
+        <li><a href="/noname/{{ name }}/">{{ name }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
