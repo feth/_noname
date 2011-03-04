@@ -10,7 +10,20 @@ class VoteInline(admin.TabularInline):
 
 
 class NameAdmin(admin.ModelAdmin):
-    fields=['name', 'explanation', 'image']
+    fieldsets = (
+            (None, {
+             'fields': ('name',)
+             }
+            ),
+            ('Availability', {
+             'fields': ('free_brand', 'free_dotnet', 'free_dotcom', 'free_dotfr')
+             }
+            ),
+            ('Optional info', {
+            'fields': ('explanation', 'image')
+            }
+            )
+            )
     inlines = [VoteInline]
     list_display = ('name',)
 
