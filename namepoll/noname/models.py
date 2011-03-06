@@ -42,12 +42,14 @@ class Voter(models.Model):
 
 class Evaluation(models.Model):
     VALUES = (
-        (-1, 'Not voted'),
         (0, 'Prejudiciable'),
-        (1, 'Valid name'),
-        (2, 'Great name'),
+        (1, 'Valid'),
+        (2, 'Great'),
     )
-    value = models.IntegerField("What do you think of this name?", choices=VALUES, default=-1)
+    value = models.IntegerField(
+        "What do you think this name would be to our company?",
+        choices=VALUES,
+        default=-1)
     message = models.TextField(max_length=300)
     author = models.ForeignKey(Voter)
     subject = models.ForeignKey(CompanyName)
