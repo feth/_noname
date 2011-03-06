@@ -35,7 +35,7 @@ def _voter(request):
 
 def thankyou(request):
     voter = _voter(request)
-    return render_to_response('noname/thankyou.html', {'navskip': 'next', 'voter': voter})
+    return render_to_response('noname/thankyou.html', {'voter': voter})
 
 
 def _next(voter):
@@ -88,6 +88,5 @@ def index(request):
     variables = {
         'voter': voter,
         'all_proposed_names': CompanyName.objects.all(),
-        'navskip': 'index next',
         }
     return render_to_response('noname/index.html', variables)

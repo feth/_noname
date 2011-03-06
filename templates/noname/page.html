@@ -15,6 +15,6 @@
 <body>
 {%block body %}{% endblock %}
 {% include "noname/sys.html" with title="Context" voter=voter only %}
-{% include "noname/nav.html" with title="Navigation" navskip="index next" voter=voter only %}
+{% block nav %}{% include "noname/nav.html" with title="Navigation" only %}{% endblock nav %}
 </body>
 </html>
