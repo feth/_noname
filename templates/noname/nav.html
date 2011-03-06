@@ -1,24 +1,10 @@
 {% extends "noname/foldable.html" %}
-{% comment %}
-Element's id are always the same if the variable id_prefix is not provided
-{% endcomment %}
-{% block main_id %}{{ id_prefix }}nav{% endblock %}
-{% block trigger_id %}{{ id_prefix }}show_nav{% endblock %}
-{% block initial_title %}[-] Navigation{% endblock %}
-{% block foldable_id %}{{ id_prefix }}navigation{% endblock %}
+
 {% block content %}
-{% if "index" in skip %}
-<span style="display:block; border: solid 1px;" title="You are here">All proposed names</span>
-{% else %}
-<span style="display:block;"><a href="/" title="See all proposed names in line">All proposed names</a></span>
-{% endif %}
-{% if not "next" in skip %}
-<span style="display:block;"><a href="/noname/next" title="See an other proposed name">Show another name</a></span>
-{% else %}
-<span style="display:block;"><a href="/noname/next" title="See a random proposed name">Show another name</a></span>
-{% endif %}
+<p>
+{% if "index" in navskip %}<span style="display:block; border: solid 1px;" title="You are here">All proposed names</span>
+{% else %}<span style="display:block;"><a href="/" title="See all proposed names in line">All proposed names</a></span>{% endif %}
+{% if not "next" in navskip %}<span style="display:block;"><a href="/noname/next" title="See an other proposed name">Show another name</a></span> {% endif %}
 <span style="display:block;"><a href="/admin" title="This is where admins go">admin</a></span>
-</div>
-</div>
+</p>
 {% endblock %}
-{% block closment %}#{{ id_prefix }}navigation{% endblock %}

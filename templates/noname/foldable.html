@@ -1,10 +1,27 @@
 {% comment %}
-This is some html factorization to be extended.
-See availability.html and explanation.html
+Use hide="anything" to hide this block by default
 {% endcomment %}
-<div class="contentbox" id="{% block main_id %}{% endblock %}">
-	<p class="trigger" id="{% block trigger_id %}{% endblock %}">{% block initial_title %}{% endblock %}</p>
-	<div class="foldable" id="{% block foldable_id %}{% endblock %}">
-		{% block content %}{% endblock %}
-	</div>
-</div><!-- end {% block closment %}{% endblock %} -->
+<div class="contentbox" id="{{ title }}">
+<p class="trigger" id="show_{{ title }}">
+[{% if hide %}-{% else %}+{% endif %}] {{ title }}
+</p>
+<div class="foldable" id="{{ title }}_inner"{% if hide %} style="display:none;"{% endif %}>
+	{% block content %}{% endblock %}
+</div><!-- end #{{ title }}_inner -->
+</div><!-- end #{{ title }} -->
+<script type="text/javascript">
+$(document).ready(function(){
+    var {{ title }}_isshown = false;
+    $("#show_{{ title }}").click(function(){
+        $("#{{ title }}_inner").slideToggle("slow");
+        if ({{ title }}_isshown) {
+            $("#show_{{ title }}").text("[+] {{ title }}");
+            {{ title }}_isshown = false;
+        } else {
+            $("#show_{{ title }}").text("[-] {{ title }}");
+            {{ title }}_isshown = true;
+        }
+    });
+});
+</script>
+

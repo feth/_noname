@@ -1,37 +1,22 @@
 {% extends "noname/page.html" %}
 
-
 {% block title %}“{{ companyname.name}}”: what do you think?{% endblock %}
-
-
-{% block jsfunctions %}
-<script type="text/javascript">
-$(document).ready(function(){
-{% include "noname/slide.js" with trigger="explain" title="Explanation" foldable="text_explanation" %}
-{% include "noname/slide.js" with trigger="show_avail" title="Availability" foldable="availability" %}
-{% include "noname/slide.js" with trigger="show_nav" title="Navigation" foldable="navigation" %}
-{% include "noname/slide.js" with trigger="show_illus" title="Illustration" foldable="illustration" %}
-});
-</script>
-{% endblock %}
-
 
 {% block body %}
 <div id="main">
 <div class="content" >
 <h1 id="companyname">{{ companyname.name }}</h1>
-{% include "noname/explanation.html" with companyname=companyname only %}
+{% include "noname/availability.html" with title="Availability" companyname=companyname only %}
+{% include "noname/explanation.html" with title="Explanation" hide="yes" companyname=companyname only %}
+{% include "noname/illustration.html" with title="Illustration" hide="yes" companyname=companyname only %}
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-{% include "noname/availability.html" with companyname=companyname only %}
-{% include "noname/illustration.html" only %}
 <hr/>
 </div>
-
 <hr/>
-
 <div class="forms">
 <!--form action="{y% url evalform companyname.id %}" method="POST"-->
-	<form action="coin" method="POST">
+	<form action="../../evaluate/{{ companyname }}/" method="POST">
+		{% csrf_token %}
 		<div id="evalform">
 			{{ evalform }}
 		</div><!--#evalform-->
@@ -46,6 +31,9 @@ $(document).ready(function(){
 	</form>
 </div> <!--#forms-->
 </div>
+{% for page in voter.pages_seen.all %}
+{{ page }}
+{% endfor %}
 {% include "noname/nav.html" %}
 {% endblock body %}
 

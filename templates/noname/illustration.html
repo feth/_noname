@@ -1,12 +1,5 @@
 {% extends "noname/foldable.html" %}
-{% comment %}
-Element's id are always the same if the variable id_prefix is not provided
-{% endcomment %}
 
-{% block main_id %}{{ id_prefix }}illustitle{% endblock %}
-{% block trigger_id %}{{ id_prefix }}show_illus{% endblock %}
-{% block initial_title %}[+] Illustration{% endblock %}
-{% block foldable_id %}{{ id_prefix }}illustration{% endblock %}
 {% block content %}
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAnCAYAAAAcsCj6AAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAAETgAABE4BQouT/AAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAVsSURB
@@ -36,4 +29,3 @@ eCYEKV0v8rz8/FvvVViPnWzzyvLD7bPqmvqx8sUfnC6XeID27bgyctzvajE6JH5fhFGj/SIuRr/s
 q9FxZxCtHXZ6tbmfr6rvhdfr+9bh5jfRrhK3ooGpggBAonaHgtFmsyy70Ghgl3tF3wJJpJyeY295
 h32X3IJUCcLW0u53741X4z9kxUfws6iMAwAAAABJRU5ErkJggg=="/>
 {% endblock %}
-{% block closment %}#{{ id_prefix }}illustitle{% endblock %}

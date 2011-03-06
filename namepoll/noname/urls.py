@@ -1,16 +1,13 @@
-from django.conf.urls.defaults import include, patterns
-from django.views.generic import DetailView, ListView
+from django.conf.urls.defaults import patterns
+from django.views.generic import ListView
 from noname.models import CompanyName
 
 urlpatterns = patterns('',
-    (r'^$',
-     ListView.as_view(
-         queryset=CompanyName.objects,
-         context_object_name='all_proposed_names',
-         template_name='noname/index.html')),
+    (r'^$', 'noname.views.index'),
     (r'^detail/(?P<pk>[^/]+)/$', 'noname.views.detail'),
-    (r'^comments/', include('django.contrib.comments.urls')),
+    (r'^evaluate/(?P<pk>[^/]+)/$', 'noname.views.evaluate'),
     (r'^next/$', 'noname.views.next'),
+    (r'^thankyou/$', 'noname.views.thankyou'),
     #FIXME: VERY DIRTY: I just wanna serve jquery.js
     #but I don't have internet access to see how to serve
     #static files

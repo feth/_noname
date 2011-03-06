@@ -1,5 +1,7 @@
 {% extends "noname/page.html" %}
 
+{% block jsfunctions %}
+{% endblock %}
 
 {% block title %}Noname inc.{% endblock %}
 
@@ -17,5 +19,4 @@
     <p>No proposed company names are available.</p>
 {% endif %}
 </div>
-{% include "noname/nav.html" with skip="index next" only%}
 {% endblock body%}

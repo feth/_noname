@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<script type="text/javascript" src="/noname/jquery.js"></script>
+{% block jsfunctions %}{% endblock %}
+<script language="JavaScript"></script>
+
+{% include "noname/css.html" %} {# FIXME use a static files server #}
+
+<title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+{%block body %}{% endblock %}
+{% include "noname/sys.html" with title="Context" voter=voter only %}
+{% include "noname/nav.html" with title="Navigation" navskip="index next" voter=voter only %}
+</body>
+</html>

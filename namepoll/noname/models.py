@@ -32,7 +32,9 @@ class Voter(models.Model):
     optional_nickname = models.CharField(max_length=100)
     optional_email = models.EmailField(max_length=100)
     optional_info = models.TextField()
-    pages_seen = models.ManyToManyField(CompanyName)
+    pages_seen = models.ManyToManyField(CompanyName, related_name="seen")
+    #redundant with evaluations but quite quicker
+    pages_voted = models.ManyToManyField(CompanyName, related_name="voted")
 
     def __unicode__(self):
         return "I am a voter"

@@ -1,12 +1,5 @@
 {% extends "noname/foldable.html" %}
-{% comment %}
-Element's id are always the same if the variable id_prefix is not provided
-{% endcomment %}
 
-{% block main_id %}{{ id_prefix }}availtitle{% endblock %}
-{% block trigger_id %}{{ id_prefix }}show_avail{% endblock %}
-{% block initial_title %}[-] Availability{% endblock %}
-{% block foldable_id %}{{ id_prefix }}availability{% endblock %}
 {% block content %}
 <table>
 {% for item, value in companyname.availability %}
@@ -17,4 +10,3 @@ Element's id are always the same if the variable id_prefix is not provided
 {% endfor %}
 </table>
 {% endblock %}
-{% block closment %}#{{ id_prefix }}availtitle{% endblock %}

@@ -13,5 +13,5 @@ class EvaluationForm(ModelForm):
 class VoterForm(ModelForm):
     class Meta(object):
         model = Voter
-        exclude = ('pages_seen',)
+        exclude = ('pages_seen', 'pages_voted')
 

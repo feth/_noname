@@ -1,0 +1,14 @@
+{% extends "noname/foldable.html" %}
+
+{% block content %}
+<div style="text-align: left;">
+<ul>
+<li>Server time: {% now "jS F Y H:i" %}</li>
+<li>Visitor id: {{ voter.id }}</li>
+<li>Visited pages:
+{% for name in voter.pages_seen.all %}
+        <span><a href="/noname/detail/{{ name }}/">{{ name }}</a></span>
+{% endfor %}</li>
+</ul>
+</div>
+{% endblock %}
