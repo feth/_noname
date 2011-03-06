@@ -80,6 +80,9 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'namepoll.urls'
 
+SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
+ALLOWED_INCLUDE_ROOTS = (join(expanduser('~'), 'noname/templates'),)
+
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
@@ -97,7 +100,6 @@ INSTALLED_APPS = (
      'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'django.contrib.comments',
     #my app
     'noname',
 

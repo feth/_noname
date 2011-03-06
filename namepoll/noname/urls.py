@@ -8,11 +8,7 @@ urlpatterns = patterns('',
          queryset=CompanyName.objects,
          context_object_name='all_proposed_names',
          template_name='noname/index.html')),
-    (r'^detail/(?P<pk>[^/]+)/$',
-     DetailView.as_view(
-         model=CompanyName,
-         context_object_name='companyname',
-         template_name='noname/detail.html')),
+    (r'^detail/(?P<pk>[^/]+)/$', 'noname.views.detail'),
     (r'^comments/', include('django.contrib.comments.urls')),
     (r'^next/$', 'noname.views.next'),
     #FIXME: VERY DIRTY: I just wanna serve jquery.js

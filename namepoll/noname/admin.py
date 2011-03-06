@@ -1,12 +1,14 @@
-from noname.models import CompanyName, Voter, Vote
+from noname.models import Evaluation, CompanyName, Voter
 from django.contrib import admin
+
+
+class EvaluationAdmin(admin.StackedInline):
+    model = Evaluation
 
 
 class VoterAdmin(admin.ModelAdmin):
     model = Voter
-
-class VoteInline(admin.TabularInline):
-    model=Vote
+    inlines = [EvaluationAdmin]
 
 
 class NameAdmin(admin.ModelAdmin):
@@ -24,7 +26,7 @@ class NameAdmin(admin.ModelAdmin):
             }
             )
             )
-    inlines = [VoteInline]
+#    inlines = [EvaluationAdmin]
     list_display = ('name',)
 
 admin.site.register(CompanyName, NameAdmin)

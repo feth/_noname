@@ -1,0 +1,10 @@
+{% comment %}
+This is some html factorization to be extended.
+See availability.html and explanation.html
+{% endcomment %}
+<div class="contentbox" id="{% block main_id %}{% endblock %}">
+	<p class="trigger" id="{% block trigger_id %}{% endblock %}">{% block initial_title %}{% endblock %}</p>
+	<div class="foldable" id="{% block foldable_id %}{% endblock %}">
+		{% block content %}{% endblock %}
+	</div>
+</div><!-- end {% block closment %}{% endblock %} -->

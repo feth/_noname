@@ -1,0 +1,11 @@
+{% extends "noname/foldable.html" %}
+{% comment %}
+Element's id are always the same if the variable id_prefix is not provided
+{% endcomment %}
+
+{% block main_id %}{{ id_prefix }}explanation{% endblock %}
+{% block trigger_id %}{{ id_prefix }}explain{% endblock %}
+{% block initial_title %}[+] Explanation{% endblock %}
+{% block foldable_id %}{{ id_prefix }}text_explanation{% endblock %}
+{% block content %}<p>{{ companyname.explanation }}</p>{% endblock %}
+{% block closment %}#{{ id_prefix }}explanation{% endblock %}

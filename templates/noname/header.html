@@ -1,125 +1,13 @@
-<html>
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
-<script type="text/javascript" src="/noname/jquery.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-   var show_expl = false;
-    $("#explain").click(function(){
-        $("#text_explanation").slideToggle("slow");
-        if (show_expl) {
-            $("#explain").text("[+] Explanation");
-            show_expl = false;
-        } else {
-            $("#explain").text("[-] Explanation");
-            show_expl = true;
-        }
-    });
-   var show_avail = true;
-    $("#show_avail").click(function(){
-        $("#availability").slideToggle("slow");
-        if (show_avail) {
-            $("#show_avail").text("[+] Availability");
-            show_avail = false;
-        } else {
-            $("#show_avail").text("[-] Availability");
-            show_avail = true;
-        }
-    });
-   var show_nav = true;
-    $("#show_nav").click(function(){
-        $("#navigation").slideToggle("slow");
-        if (show_nav) {
-            $("#show_nav").text("[+] Navigation");
-            show_nav = false;
-        } else {
-            $("#show_nav").text("[-] Navigation");
-            show_nav = true;
-        }
-    });
-   var show_illus = true;
-    $("#show_illus").click(function(){
-        $("#illustration").slideToggle("slow");
-        if (show_illus) {
-            $("#show_illus").text("[+] Illustration");
-            show_illus = false;
-        } else {
-            $("#show_illus").text("[-] Illustration");
-            show_illus = true;
-        }
-    });
-});
-</script>
+{% include "noname/javascript.html" %}
 
-<style type="text/css">
-div.content
-{
-float: left;
-border: thin silver solid;
-margin: 0.5em;
-padding: 0.5em;
-text-align:center;
-}
-div.contentbox
-{
-text-align:center;
-float: left;
-}
+{% include "noname/css.html" %} {# FIXME use a static files server #}
 
-div.foldable,p.trigger
-{
-margin:0px;
-padding:5px;
-	text-align:center;
-background:#e5eecc;
-border:solid 1px #c3c3c3;
-}
-.trigger:hover
-{
-background:#ffffff;
-border:solid 1px #000;
-cursor:pointer;
-}
-div#explanation
-{
-width: 30em;
-}
-div#availtitle
-{
-width: 10em;
-}
-div#nav
-{
-width: 13em;
-}
-div#text_explanation,div#illustration
-{
-display:none;
-}
-td.avail,td.unavail
-{
-background:#ccffcc;
-margin:10px;
-padding:5px;
-        text-align:left;
-}
-td.unavail
-{
-background:#ffcccc;
-}
-tr
-{
-    text-align:right;
-}
-tr.row1
-{
-background:#cfcfcf;
-}
-tr.row2
-{
-background:#dfdfdf;
-}
-</style>
 <title>{{ title }}</title>
 </head>
 <body>

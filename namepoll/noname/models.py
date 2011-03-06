@@ -16,7 +16,6 @@ class CompanyName(models.Model):
     free_dotfr = models.BooleanField('.fr is free')
     free_dotnet = models.BooleanField('.net is free')
 
-
     def __unicode__(self):
         return self.name
 
@@ -30,20 +29,25 @@ class CompanyName(models.Model):
 
 
 class Voter(models.Model):
-    optionnal_info = models.TextField()
+    optional_nickname = models.CharField(max_length=100)
+    optional_email = models.EmailField(max_length=100)
+    optional_info = models.TextField()
+    pages_seen = models.ManyToManyField(CompanyName)
+
+    def __unicode__(self):
+        return "I am a voter"
 
 
-class Vote(models.Model):
-    VOTE_CHOICES = (
-        (0, 'Dislike'),
-        (1, 'Acceptable'),
-        (2, 'Good'),
-        )
-
-    name = models.ForeignKey(CompanyName)
-    voter = models.ForeignKey(Voter)
-    date = models.DateTimeField('time of vote')
-    value = models.IntegerField(choices=VOTE_CHOICES)
-    additionnal_remarks = models.TextField()
-
+class Evaluation(models.Model):
+    VALUES = (
+        (-1, 'Not voted'),
+        (0, 'Prejudiciable'),
+        (1, 'Valid name'),
+        (2, 'Great name'),
+    )
+    value = models.IntegerField("What do you think of this name?", choices=VALUES, default=-1)
+    message = models.TextField(max_length=300)
+    author = models.ForeignKey(Voter)
+    subject = models.ForeignKey(CompanyName)
+    eval_date = models.DateTimeField()
 
