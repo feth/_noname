@@ -4,10 +4,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
-<script type="text/javascript" src="/noname/jquery.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}jquery.js"></script>
 {% block jsfunctions %}{% endblock %}
 
-{% include "noname/css.html" %} {# FIXME use a static files server #}
+<link href="{{ STATIC_URL }}main.css" rel="stylesheet" type="text/css"/>
+{% block css %}{% endblock css %}
 
 <title>{% block title %}{% endblock %}</title>
 </head>

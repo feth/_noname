@@ -90,6 +90,9 @@ TEMPLATE_DIRS = (
     join(expanduser('~'), 'noname/templates'),
 )
 
+STATIC_URL = '/static/'
+STATIC_ROOT = join(expanduser('~'), 'noname/static')
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -102,5 +105,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     #my app
     'noname',
+    #it needs static files, but we could maybe point STATIC_URL to another server
+    'django.contrib.staticfiles',
 
 )

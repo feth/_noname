@@ -7,7 +7,7 @@ class EvaluationForm(ModelForm):
         model = Evaluation
         fields = ('value', 'message')
         widgets = {
-            'value': RadioSelect
+            'value': RadioSelect(attrs={'class':'star'})
             }
 
 class VoterForm(ModelForm):
