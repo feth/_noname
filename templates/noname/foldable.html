@@ -8,7 +8,7 @@ Use hide="anything" to hide this block by default
 <div class="foldable" id="{{ title }}_inner"{% if hide %} style="display:none;"{% endif %}>
 	{% block content %}{% endblock %}
 </div><!-- end #{{ title }}_inner -->
-</div><!-- end #{{ title }} -->
+</div><!-- end #{{ title }} -->
 <script type="text/javascript">
 $(document).ready(function(){
     var {{ title }}_isshown = false;
