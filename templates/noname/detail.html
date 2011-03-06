@@ -1,4 +1,9 @@
 {% extends "noname/page.html" %}
+
+
+{% block title %}“{{ companyname.name}}”: what do you think?{% endblock %}
+
+
 {% block jsfunctions %}
 <script type="text/javascript">
 $(document).ready(function(){
@@ -10,6 +15,7 @@ $(document).ready(function(){
 </script>
 {% endblock %}
 
+
 {% block body %}
 <div id="main">
 <div class="content" >
@@ -17,7 +23,7 @@ $(document).ready(function(){
 {% include "noname/explanation.html" with companyname=companyname only %}
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 {% include "noname/availability.html" with companyname=companyname only %}
-{% include "noname/illustration.html" %}
+{% include "noname/illustration.html" only %}
 <hr/>
 </div>
 

@@ -1,4 +1,10 @@
-{% include "noname/header.html" with title="Noname corp." %}
+{% extends "noname/page.html" %}
+
+
+{% block title %}Noname inc.{% endblock %}
+
+
+{% block body %}
 <div id="contents" style="float: left; width: 50em; border: thin silver solid; margin: 0.5em; padding: 0.5em;">
 <h1>Proposed names</h1>
 {% if all_proposed_names.all %}
@@ -12,4 +18,4 @@
 {% endif %}
 </div>
 {% include "noname/nav.html" with skip="index next" only%}
-{% include "noname/footer.html" %}
+{% endblock body%}
