@@ -47,10 +47,10 @@ div.star-rating{background:transparent!important;overflow:hidden!important}
 	<form action="../../evaluate/{{ companyname }}/" method="POST">
 {% csrf_token %}
 		<div id="evalform">
-			{{ evalform.as_p }}
+			{{ evalform.custom_display }}
 		</div><!--#evalform-->
 		<div id="voterform">
-			{{ voterform }}
+			{{ voterform.custom_display }}
 		</div><!--#voterform-->
 		<div class="buttons">
 			<input type="submit" value="Submit"/>
