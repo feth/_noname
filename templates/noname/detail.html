@@ -44,7 +44,7 @@ div.star-rating{background:transparent!important;overflow:hidden!important}
 </div>
 <hr/>
 <div class="forms">
-	<form action="{% url evaluate companyname %}" method="POST">
+	<form action="{% url detail companyname %}" method="POST">
 {% csrf_token %}
 		<div id="evalform">
 			{{ evalform.custom_display }}

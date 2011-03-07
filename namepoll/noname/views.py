@@ -41,7 +41,7 @@ def _next(voter):
             return HttpResponseRedirect("/noname/thankyou/")
 
     #a relative path. We are 'appname/next'
-    newpath = '../detail/%s' % choice(list(remaining)).name
+    newpath = '../../detail/%s' % choice(list(remaining)).name
     return HttpResponseRedirect(newpath)
 
 
@@ -67,7 +67,26 @@ def detail(request, pk):
     voter.pages_seen.add(companyname)
 
     evalform = EvaluationForm(request.POST)
+    if evalform.is_valid():
+        evaluation = Evaluation()
+        evaluation.author = voter
+        evaluation.subject = companyname
+        evaluation.eval_date = date.today()
+
+        evaluation.value = evalform.cleaned_data['value']
+        evaluation.message = evalform.cleaned_data['message']
+
+        evaluation.save()
+        return _next(voter)
+
     voterform = VoterForm(request.POST, instance=voter)
+    if voterform.is_valid():
+        voter.optional_nickname = voterform.cleaned_data['optional_nickname']
+        voter.optional_email = voterform.cleaned_data['optional_email']
+        voter.optional_info = voterform.cleaned_data['optional_info']
+        
+    voter.pages_voted.add(companyname)
+    voter.save()
 
     variables = {
         'companyname': companyname,
@@ -76,30 +95,6 @@ def detail(request, pk):
         'voterform': voterform,
     }
     return _render(request, 'noname/detail.html', variables)
-
-
-def evaluate(request, pk):
-    companyname = get_object_or_404(CompanyName, pk=pk)
-
-    evalform = EvaluationForm(request.POST)
-    if not evalform.is_valid():
-        return HttpResponseRedirect("/noname/detail/%s" % companyname)
-
-    voter = _voter(request)
-    companyname = get_object_or_404(CompanyName, pk=pk)
-    voter.pages_voted.add(companyname)
-
-    evaluation = Evaluation()
-    evaluation.author = voter
-    evaluation.subject = companyname
-    evaluation.eval_date = date.today()
-
-    evaluation.value = evalform.cleaned_data['value']
-    evaluation.message = evalform.cleaned_data['message']
-
-    evaluation.save()
-
-    return _next(voter)
 
 
 def index(request):
