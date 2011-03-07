@@ -79,6 +79,10 @@ def detail(request, pk):
 
 
 def evaluate(request, pk):
+    evalform = EvaluationForm(request.POST)
+    if not evalform.is_valid():
+        return detail(request, pk)
+
     voter = _voter(request)
     companyname = get_object_or_404(CompanyName, pk=pk)
     voter.pages_voted.add(companyname)
