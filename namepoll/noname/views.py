@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 from random import choice
 
 from django.template import RequestContext
@@ -6,7 +6,7 @@ from django.template import loader
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 
-from noname.models import CompanyName, Voter
+from noname.models import CompanyName, Voter, Evaluation
 from noname.forms import EvaluationForm, VoterForm
 
 SESSIONS_EXPIRY = datetime(2011, 12, 31, 23, 59, 59, 999)
@@ -82,6 +82,13 @@ def evaluate(request, pk):
     voter = _voter(request)
     companyname = get_object_or_404(CompanyName, pk=pk)
     voter.pages_voted.add(companyname)
+
+    evaluation = Evaluation()
+    evaluation.author = voter
+    evaluation.subject = companyname
+    evaluation.eval_date = date.today()
+    evaluation.value = request._get_post()['value']
+    evaluation.save()
 
     return _next(voter)
 
