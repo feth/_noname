@@ -35,4 +35,5 @@ go in prod
 * remove DEBUG = True from settings.py
 * python manage.py collectfiles
 * set up a static files server that serves the static files
+* use packed versions of jquery.js and jquery.ratings.js
 
