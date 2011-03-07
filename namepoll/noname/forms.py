@@ -44,7 +44,7 @@ class VoterForm(ModelForm):
 
     def custom_display(self):
         return self._html_output(
-            normal_row = u'<p%(html_class_attr)s><b>%(label)s</b> <br/> %(field)s%(help_text)s</p>',
+            normal_row = u'<p%(html_class_attr)s><b>%(label)s</b> <br/> %(field)s%(help_text)s<font color="ForestGreen">%(errors)s</font></p>',
             error_row = u'%s',
             row_ender = '</p>',
             help_text_html = u' <span class="helptext">%s</span>',
