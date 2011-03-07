@@ -26,7 +26,7 @@ class NameAdmin(admin.ModelAdmin):
             }
             )
             )
-#    inlines = [EvaluationAdmin]
+    inlines = [EvaluationAdmin]
     list_display = ('name',)
 
 admin.site.register(CompanyName, NameAdmin)
