@@ -88,6 +88,7 @@ def evaluate(request, pk):
     evaluation.subject = companyname
     evaluation.eval_date = date.today()
     evaluation.value = request._get_post()['value']
+    evaluation.message = request._get_post()['value']
     evaluation.save()
 
     return _next(voter)
