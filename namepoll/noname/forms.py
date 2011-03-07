@@ -8,10 +8,11 @@ from .models import Evaluation, Voter
 class MyRFRenderer(RadioFieldRenderer):
     """
     Custom rendering for the RadioSelect: We need them side to side.
+    Default rendering makes <ul><li>
     """
     def render(self):
         return mark_safe(
-            u'<div id=blah>\n%s</div>\n' % u'\n'.join([u'%s'% force_unicode(w) for w in self]) + u'\n'
+            u'<div id="rating">\n%s\n</div><!-- end #rating -->\n' % u'\n'.join([u'%s'% force_unicode(w) for w in self])
             )
 
 class EvaluationForm(ModelForm):
