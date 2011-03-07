@@ -5,6 +5,7 @@ from django.template import RequestContext
 from django.template import loader
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 from noname.models import CompanyName, Voter, Evaluation
 from noname.forms import EvaluationForm, VoterForm
@@ -41,7 +42,8 @@ def _next(voter):
             return HttpResponseRedirect("/noname/thankyou/")
 
     #a relative path. We are 'appname/next'
-    newpath = '../../detail/%s' % choice(list(remaining)).name
+    new_company_name = choice(list(remaining)).name
+    newpath = reverse('detail', args=(new_company_name,))
     return HttpResponseRedirect(newpath)
 
 
