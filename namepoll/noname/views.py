@@ -41,7 +41,7 @@ def _next(voter):
             return HttpResponseRedirect("/noname/thankyou/")
 
     #a relative path. We are 'appname/next'
-    newpath = '../detail/%s' % choice(list(remaining)).name
+    newpath = '/noname/detail/%s' % choice(list(remaining)).name
     return HttpResponseRedirect(newpath)
 
 
