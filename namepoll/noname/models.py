@@ -1,9 +1,13 @@
+#-*-coding:utf-8-*-
 from os.path import expanduser
 
 from django.db import models
 
 
 class CompanyName(models.Model):
+    """
+        Model for the company name
+    """
     name = models.CharField(max_length=200, primary_key=True)
     explanation = models.TextField()
     image = models.ImageField(
@@ -29,9 +33,12 @@ class CompanyName(models.Model):
 
 
 class Voter(models.Model):
-    optional_nickname = models.CharField(max_length=100)
-    optional_email = models.EmailField(max_length=100)
-    optional_info = models.TextField()
+    """
+        The voter's model
+    """
+    optional_nickname = models.CharField(max_length=100, blank=True)
+    optional_email = models.EmailField(max_length=100, blank=True)
+    optional_info = models.TextField(blank=True)
     pages_seen = models.ManyToManyField(CompanyName, related_name="seen")
     #redundant with evaluations but quite quicker
     pages_voted = models.ManyToManyField(CompanyName, related_name="voted")
@@ -41,6 +48,9 @@ class Voter(models.Model):
 
 
 class Evaluation(models.Model):
+    """
+        Evaluation's model
+    """
     VALUES = (
         (0, 'Prejudiciable'),
         (1, 'Valid'),

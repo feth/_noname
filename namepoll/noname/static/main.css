@@ -1,51 +1,50 @@
 div.content,div.forms
 {
-/*float: left;*/
-border: thin silver solid;
-margin: 0.5em;
-padding: 0.5em;
-text-align:left;
+    /*float: left;*/
+    border: thin silver solid;
+    margin: 0.5em;
+    padding: 0.5em;
+    text-align:left;
 }
 div#main
 {
-width: 70%;
-float: left;
+    width: 70%;
+    float: left;
 }
 hr
 {
-clear: both;
-visibility: hidden;
+    clear: both;
+    visibility: hidden;
 }
 div.contentbox
 {
-text-align:center;
-float: left;
+    text-align:center;
+    float: left;
 }
-
 div.foldable,p.trigger
 {
-margin:0px;
-padding:5px;
-	text-align:center;
-background:#e5eecc;
-border:solid 1px #c3c3c3;
+    margin:0px;
+    padding:5px;
+    text-align:center;
+    background:#e5eecc;
+    border:solid 1px #c3c3c3;
 }
 .trigger:hover
 {
-background:#ffffff;
-border:solid 1px #000;
-cursor:pointer;
+    background:#ffffff;
+    border:solid 1px #000;
+    cursor:pointer;
 }
 td.avail,td.unavail
 {
-background:#ccffcc;
-margin:10px;
-padding:5px;
-        text-align:left;
+    background:#ccffcc;
+    margin:10px;
+    padding:5px;
+    text-align:left;
 }
 td.unavail
 {
-background:#ffcccc;
+    background:#ffcccc;
 }
 tr
 {
@@ -53,13 +52,27 @@ tr
 }
 tr.row1
 {
-background:#cfcfcf;
+    background:#cfcfcf;
 }
 tr.row2
 {
-background:#dfdfdf;
+    background:#dfdfdf;
 }
-h1#companyname
+h1 #companyname
 {
-text-align: center;
+    text-align: center;
+}
+#evalform ul{
+    list-style:none;
+}
+fieldset{
+    border:1px solid #e5e5e5;
+    padding-bottom:10px;
+    margin-bottom:15px;
+}
+#evalform li{
+    float:left;
+}
+#evalform label{
+    padding-left:5px;
 }

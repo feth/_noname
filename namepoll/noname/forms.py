@@ -14,15 +14,14 @@ class EvaluationForm(ModelForm):
         model = Evaluation
         fields = ("value", 'message',)
         widgets = {
-            'value': RadioSelect(attrs={'class':'star'},
-                                choices=('<br/>','<br/>','<br/>',))
+            'value': RadioSelect(attrs={'class':'star'})
             }
 
     def custom_display(self):
         if hasattr(self, "display_errors") and not self.display_errors:
             normal_row = u'<p%(html_class_attr)s><b>%(label)s</b> <br/> %(field)s%(help_text)s</p><br/>'
         else:
-            normal_row = u'<p%(html_class_attr)s><b>%(label)s</b> <br/> %(field)s%(help_text)s<font color="ForestGreen">%(errors)s</font></p><br/>'
+            normal_row = u'<p%(html_class_attr)s><b>%(label)s</b> <br/> %(field)s%(help_text)s<font color="ForestGreen">%(errors)s</font></p>'
 
         return self._html_output(
             normal_row = normal_row,
@@ -39,7 +38,7 @@ class VoterForm(ModelForm):
 
     def custom_display(self):
         return self._html_output(
-            normal_row = u'<p%(html_class_attr)s><b>%(label)s</b> <br/> %(field)s%(help_text)s</p>',
+             normal_row = u'<p%(html_class_attr)s><b>%(label)s</b> <br/> %(field)s%(help_text)s<font color="ForestGreen">%(errors)s</font></p>',
             error_row = u'%s',
             row_ender = '</p>',
             help_text_html = u' <span class="helptext">%s</span>',

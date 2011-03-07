@@ -4,60 +4,66 @@
 {% block jsfunctions %}
 <script type="text/javascript" src="{{ STATIC_URL }}jquery.rating.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-  $(function(){
-    $('input.star').rating();
-  });
-});
+    $(document).ready(function(){
+            $(function(){
+                $('input.star').rating();
+                });
+            });
 
 </script>
 {% endblock %}
 {% block css %}
 <style>
-{% comment %}
-Keeping this css here because /for now/, STATIC_URL can change.
-{% endcomment %}
-/* jQuery.Rating Plugin CSS - http://www.fyneworks.com/jquery/star-rating/ */
-div.rating-cancel,div.star-rating{float:left;width:17px;height:15px;text-indent:-999em;cursor:pointer;display:block;background:transparent;overflow:hidden}
-div.rating-cancel,div.rating-cancel a{background:url({{ STATIC_URL }}delete.gif) no-repeat 0 -16px}
-div.star-rating,div.star-rating a{background:url({{ STATIC_URL }}star.gif) no-repeat 0 0px}
-div.rating-cancel a,div.star-rating a{display:block;width:16px;height:100%;background-position:0 0px;border:0}
-div.star-rating-on a{background-position:0 -16px!important}
-div.star-rating-hover a{background-position:0 -32px}
-/* Read Only CSS */
-div.star-rating-readonly a{cursor:default !important}
-/* Partial Star CSS */
-div.star-rating{background:transparent!important;overflow:hidden!important}
-/* END jQuery.Rating Plugin CSS */
+    {% comment %}
+    Keeping this css here because /for now/, STATIC_URL can change.
+    {% endcomment %}
+    /* jQuery.Rating Plugin CSS - http://www.fyneworks.com/jquery/star-rating/ */
+    div.rating-cancel,div.star-rating{float:left;width:17px;height:15px;text-indent:-999em;cursor:pointer;display:block;background:transparent;overflow:hidden}
+    div.rating-cancel,div.rating-cancel a{background:url({{ STATIC_URL }}delete.gif) no-repeat 0 -16px}
+    div.star-rating,div.star-rating a{background:url({{ STATIC_URL }}star.gif) no-repeat 0 0px}
+    div.rating-cancel a,div.star-rating a{display:block;width:16px;height:100%;background-position:0 0px;border:0}
+    div.star-rating-on a{background-position:0 -16px!important}
+    div.star-rating-hover a{background-position:0 -32px}
+    /* Read Only CSS */
+    div.star-rating-readonly a{cursor:default !important}
+    /* Partial Star CSS */
+    div.star-rating{background:transparent!important;overflow:hidden!important}
+    /* END jQuery.Rating Plugin CSS */
 </style>
 {% endblock css %}
 
 {% block body %}
 <div id="main">
-<div class="content" >
-<h1 id="companyname">{{ companyname.name }}</h1>
-{% include "noname/availability.html" with title="Availability" companyname=companyname only %}
-{% include "noname/explanation.html" with title="Explanation" hide="yes" companyname=companyname only %}
-{% include "noname/illustration.html" with title="Illustration" hide="yes" companyname=companyname only %}
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-<hr/>
-</div>
-<hr/>
-<div class="forms">
-	<form action="{% url detail companyname %}" method="POST">
-{% csrf_token %}
-		<div id="evalform">
-			{{ evalform.custom_display }}
-		</div><!--#evalform-->
-		<div id="voterform">
-			{{ voterform.custom_display }}
-		</div><!--#voterform-->
-		<div class="buttons">
-			<input type="submit" value="Submit"/>
-			<a href=".">Cancel</a>
-		</div>
-	</form>
-</div> <!--#forms-->
+    <div class="content" >
+        <h1 id="companyname">{{ companyname.name }}</h1>
+        {% include "noname/availability.html" with title="Availability" companyname=companyname only %}
+        {% include "noname/explanation.html" with title="Explanation" hide="yes" companyname=companyname only %}
+        {% include "noname/illustration.html" with title="Illustration" hide="yes" companyname=companyname only %}
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        <hr/>
+    </div>
+    <hr/>
+    <div class="forms">
+        <form action="{% url detail companyname %}" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Your advice</legend>
+                <div id="evalform">
+                    {{ evalform.custom_display }}
+                </div><!--evalform-->
+            </fieldset>
+            <fieldset>
+                <legend>Who are you ?</legend>
+                <div id="voterform">
+                    {{ voterform.custom_display }}
+                </div><!--voterform-->
+            </fieldset>
+                <div class="buttons">
+                    <input type="submit" value="Submit"/>
+                    <input type="button" onclick="self.location.href='.'" value="Cancel">
+                </div>
+            </form>
+    </div> <!--forms-->
 </div>
 {% for page in voter.pages_seen.all %}
 {{ page }}
