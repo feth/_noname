@@ -28,9 +28,9 @@ def _voter(request):
     #make a default voter
     voter = Voter()
     voter.save() #so it's guaranteed to have an id
-    request.session["voter"] = voter
+    request.session["voter"] = voter.id
 
-    return voter
+    return voter.id
 
 
 def _next(voter):
@@ -55,23 +55,52 @@ def _render(request, templatename, variables):
 
 
 def thankyou(request):
-    voter = _voter(request)
+    voter_id = _voter(request)
+    voter = Voter.objects.get(id=voter_id)
     return _render(request, 'noname/thankyou.html', {'voter': voter})
 
 
 def next(request):
-    voter = _voter(request)
+    voter_id = _voter(request)
+    voter = Voter.objects.get(id=voter_id)
     return _next(voter)
 
 
 def detail(request, pk):
-    voter = _voter(request)
+    voter_id = _voter(request)
+    voter = Voter.objects.get(id=voter_id)
     companyname = get_object_or_404(CompanyName, pk=pk)
     voter.pages_seen.add(companyname)
 
-    evalform = EvaluationForm(request.POST)
-    if evalform.is_valid():
-        evaluation = Evaluation()
+    if not request.POST:
+        voterform = VoterForm(instance=voter)
+    else:
+        voterform = VoterForm(request.POST, instance=voter)
+
+    if request.POST and voterform.is_valid():
+        voter.optional_nickname = voterform.cleaned_data['optional_nickname']
+        voter.optional_email = voterform.cleaned_data['optional_email']
+        voter.optional_info = voterform.cleaned_data['optional_info']
+        voter.save()
+
+    try:
+        evaluation = Evaluation.objects.get(subject=companyname)
+    except Evaluation.DoesNotExist, e:
+        evaluation = None
+
+    if not evaluation:
+        evalform = EvaluationForm(request.POST)
+    elif not request.POST:
+        evalform = EvaluationForm(instance=evaluation)
+    else:
+        evalform = EvaluationForm(request.POST, instance=evaluation)
+
+    if request.POST and evalform.is_valid():
+        if not evaluation:
+            # XXX: @feth check me : we rewrite over a previous evaluation if we
+            # found one.
+            evaluation = Evaluation()
+
         evaluation.author = voter
         evaluation.subject = companyname
         evaluation.eval_date = date.today()
@@ -80,6 +109,8 @@ def detail(request, pk):
         evaluation.message = evalform.cleaned_data['message']
 
         evaluation.save()
+
+        voter.pages_voted.add(companyname)
         return _next(voter)
 
     if request.POST:
@@ -91,15 +122,6 @@ def detail(request, pk):
         # page: we don't display errors.
         evalform.display_errors = False
 
-    voterform = VoterForm(request.POST, instance=voter)
-    if voterform.is_valid():
-        voter.optional_nickname = voterform.cleaned_data['optional_nickname']
-        voter.optional_email = voterform.cleaned_data['optional_email']
-        voter.optional_info = voterform.cleaned_data['optional_info']
-        
-    voter.pages_voted.add(companyname)
-    voter.save()
-
     variables = {
         'companyname': companyname,
         'voter': voter,
@@ -110,7 +132,8 @@ def detail(request, pk):
 
 
 def index(request):
-    voter = _voter(request)
+    voter_id = _voter(request)
+    voter = Voter.objects.get(id=voter_id)
     variables = {
         'voter': voter,
         'all_proposed_names': CompanyName.objects.all(),
