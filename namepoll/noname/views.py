@@ -28,9 +28,9 @@ def _voter(request):
     #make a default voter
     voter = Voter()
     voter.save() #so it's guaranteed to have an id
-    request.session["voter"] = voter
+    request.session["voter"] = voter.id
 
-    return voter
+    return voter.id
 
 
 def _next(voter):
@@ -64,7 +64,8 @@ def next(request):
 
 
 def detail(request, pk):
-    voter = _voter(request)
+    voter_id = _voter(request)
+    voter = Voter.objects.get(id=voter_id)
     companyname = get_object_or_404(CompanyName, pk=pk)
     voter.pages_seen.add(companyname)
 
