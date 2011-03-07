@@ -79,6 +79,15 @@ def detail(request, pk):
         evaluation.save()
         return _next(voter)
 
+    if request.POST:
+        # Here, the user posted some data but the evalform wasn't valid (see
+        # above) so we display erros. See also EvaluationForm.custom_display.
+        evalform.display_errors = True
+    else:
+        # Here, the user didn't post any data so it's the first time he sees the
+        # page: we don't display errors.
+        evalform.display_errors = False
+
     voterform = VoterForm(request.POST, instance=voter)
     if voterform.is_valid():
         voter.optional_nickname = voterform.cleaned_data['optional_nickname']
