@@ -2,10 +2,9 @@ from datetime import datetime
 from random import choice
 
 from django.template import RequestContext
-from django.template import Context, loader
-from django.shortcuts import render_to_response, get_object_or_404
+from django.template import loader
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from django.core.urlresolvers import reverse
 
 from noname.models import CompanyName, Voter
 from noname.forms import EvaluationForm, VoterForm
@@ -33,11 +32,6 @@ def _voter(request):
     return voter
 
 
-def thankyou(request):
-    voter = _voter(request)
-    return render_to_response('noname/thankyou.html', {'voter': voter})
-
-
 def _next(voter):
     allcomp = CompanyName.objects.all()
     remaining = frozenset(allcomp) - frozenset(voter.pages_seen.all())
@@ -49,6 +43,17 @@ def _next(voter):
     #a relative path. We are 'appname/next'
     newpath = '../detail/%s' % choice(remaining).name
     return HttpResponseRedirect(newpath)
+
+
+def _render(request, templatename, variables):
+    context = RequestContext(request, variables)
+    template = loader.get_template(templatename)
+    return HttpResponse(template.render(context))
+
+
+def thankyou(request):
+    voter = _voter(request)
+    return _render(request, 'noname/thankyou.html', {'voter': voter})
 
 
 def next(request):
@@ -63,16 +68,14 @@ def detail(request, pk):
 
     evalform = EvaluationForm()
     voterform = VoterForm(request.POST, instance=voter)
-#    evalform.save()
 
-    template = loader.get_template('noname/detail.html')
-    context = RequestContext(request, {
+    variables = {
         'companyname': companyname,
         'voter': voter,
         'evalform': evalform,
         'voterform': voterform,
-    })
-    return HttpResponse(template.render(context))
+    }
+    return _render(request, 'noname/detail.html', variables)
 
 
 def evaluate(request, pk):
@@ -89,4 +92,4 @@ def index(request):
         'voter': voter,
         'all_proposed_names': CompanyName.objects.all(),
         }
-    return render_to_response('noname/index.html', variables)
+    return _render(request, 'noname/index.html', variables)
