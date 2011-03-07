@@ -10,7 +10,8 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     )
 urlpatterns += staticfiles_urlpatterns()
+#redirect all the rest
 urlpatterns += patterns('',
-    (r'^.*', include('noname.urls')),
+    (r'^.*', 'django.views.generic.simple.redirect_to', {'url': '/noname/'}),
     )
 
