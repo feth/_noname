@@ -69,6 +69,17 @@ def detail(request, pk):
     companyname = get_object_or_404(CompanyName, pk=pk)
     voter.pages_seen.add(companyname)
 
+    if not request.POST:
+        voterform = VoterForm(instance=voter)
+    else:
+        voterform = VoterForm(request.POST, instance=voter)
+
+    if request.POST and voterform.is_valid():
+        voter.optional_nickname = voterform.cleaned_data['optional_nickname']
+        voter.optional_email = voterform.cleaned_data['optional_email']
+        voter.optional_info = voterform.cleaned_data['optional_info']
+        voter.save()
+
     evalform = EvaluationForm(request.POST)
     if evalform.is_valid():
         evaluation = Evaluation()
@@ -80,6 +91,8 @@ def detail(request, pk):
         evaluation.message = evalform.cleaned_data['message']
 
         evaluation.save()
+
+        voter.pages_voted.add(companyname)
         return _next(voter)
 
     if request.POST:
@@ -90,15 +103,6 @@ def detail(request, pk):
         # Here, the user didn't post any data so it's the first time he sees the
         # page: we don't display errors.
         evalform.display_errors = False
-
-    voterform = VoterForm(request.POST, instance=voter)
-    if voterform.is_valid():
-        voter.optional_nickname = voterform.cleaned_data['optional_nickname']
-        voter.optional_email = voterform.cleaned_data['optional_email']
-        voter.optional_info = voterform.cleaned_data['optional_info']
-        
-    voter.pages_voted.add(companyname)
-    voter.save()
 
     variables = {
         'companyname': companyname,
