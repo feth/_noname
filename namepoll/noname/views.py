@@ -92,9 +92,8 @@ def evaluate(request, pk):
     evaluation.subject = companyname
     evaluation.eval_date = date.today()
 
-    post = request._get_post()
-    evaluation.value = post['value']
-    evaluation.message = post['message']
+    evaluation.value = evalform.cleaned_data['value']
+    evaluation.message = evalform.cleaned_data['message']
 
     evaluation.save()
 
