@@ -66,7 +66,7 @@ def detail(request, pk):
     companyname = get_object_or_404(CompanyName, pk=pk)
     voter.pages_seen.add(companyname)
 
-    evalform = EvaluationForm()
+    evalform = EvaluationForm(request.POST)
     voterform = VoterForm(request.POST, instance=voter)
 
     variables = {
