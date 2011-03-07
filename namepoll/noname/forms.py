@@ -6,6 +6,9 @@ from django.utils.encoding import force_unicode
 from .models import Evaluation, Voter
 
 class MyRFRenderer(RadioFieldRenderer):
+    """
+    Custom rendering for the RadioSelect: We need them side to side.
+    """
     def render(self):
         return mark_safe(
             u'<div id=blah>\n%s</div>\n' % u'\n'.join([u'%s'% force_unicode(w) for w in self]) + u'\n'
