@@ -55,12 +55,14 @@ def _render(request, templatename, variables):
 
 
 def thankyou(request):
-    voter = _voter(request)
+    voter_id = _voter(request)
+    voter = Voter.objects.get(id=voter_id)
     return _render(request, 'noname/thankyou.html', {'voter': voter})
 
 
 def next(request):
-    voter = _voter(request)
+    voter_id = _voter(request)
+    voter = Voter.objects.get(id=voter_id)
     return _next(voter)
 
 
@@ -115,7 +117,8 @@ def detail(request, pk):
 
 
 def index(request):
-    voter = _voter(request)
+    voter_id = _voter(request)
+    voter = Voter.objects.get(id=voter_id)
     variables = {
         'voter': voter,
         'all_proposed_names': CompanyName.objects.all(),
