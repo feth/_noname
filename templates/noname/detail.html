@@ -44,7 +44,7 @@ div.star-rating{background:transparent!important;overflow:hidden!important}
 </div>
 <hr/>
 <div class="forms">
-	<form action="../../evaluate/{{ companyname }}/" method="POST">
+	<form action="{% url evaluate companyname %}" method="POST">
 {% csrf_token %}
 		<div id="evalform">
 			{{ evalform.custom_display }}
@@ -54,7 +54,6 @@ div.star-rating{background:transparent!important;overflow:hidden!important}
 		</div><!--#voterform-->
 		<div class="buttons">
 			<input type="submit" value="Submit"/>
-			<!--a href="{y% url evalform companyname.id %}">Cancel</a>-->
 			<a href=".">Cancel</a>
 		</div>
 	</form>

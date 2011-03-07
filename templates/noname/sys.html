@@ -7,7 +7,7 @@
 <li>Visitor id: {{ voter.id }}</li>
 <li>Visited pages:
 {% for name in voter.pages_seen.all %}
-        <span><a href="/noname/detail/{{ name }}/">{{ name }}</a></span>
+        <span><a href="{% url detail name %}">{{ name }}</a></span>
 {% endfor %}</li>
 </ul>
 </div>
