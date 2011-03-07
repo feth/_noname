@@ -83,9 +83,24 @@ def detail(request, pk):
         voter.optional_info = voterform.cleaned_data['optional_info']
         voter.save()
 
-    evalform = EvaluationForm(request.POST)
-    if evalform.is_valid():
-        evaluation = Evaluation()
+    try:
+        evaluation = Evaluation.objects.get(subject=companyname)
+    except Evaluation.DoesNotExist, e:
+        evaluation = None
+
+    if not evaluation:
+        evalform = EvaluationForm(request.POST)
+    elif not request.POST:
+        evalform = EvaluationForm(instance=evaluation)
+    else:
+        evalform = EvaluationForm(request.POST, instance=evaluation)
+
+    if request.POST and evalform.is_valid():
+        if not evaluation:
+            # XXX: @feth check me : we rewrite over a previous evaluation if we
+            # found one.
+            evaluation = Evaluation()
+
         evaluation.author = voter
         evaluation.subject = companyname
         evaluation.eval_date = date.today()
