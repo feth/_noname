@@ -41,7 +41,7 @@ def _next(voter):
             return HttpResponseRedirect("/noname/thankyou/")
 
     #a relative path. We are 'appname/next'
-    newpath = '/noname/detail/%s' % choice(list(remaining)).name
+    newpath = '../detail/%s' % choice(list(remaining)).name
     return HttpResponseRedirect(newpath)
 
 
@@ -79,9 +79,11 @@ def detail(request, pk):
 
 
 def evaluate(request, pk):
+    companyname = get_object_or_404(CompanyName, pk=pk)
+
     evalform = EvaluationForm(request.POST)
     if not evalform.is_valid():
-        return detail(request, pk)
+        return HttpResponseRedirect("/noname/detail/%s" % companyname)
 
     voter = _voter(request)
     companyname = get_object_or_404(CompanyName, pk=pk)
