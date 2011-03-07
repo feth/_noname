@@ -1,3 +1,4 @@
+#-*-coding:utf-8-*-
 from django.forms import ModelForm, RadioSelect
 from django.forms.widgets import RadioFieldRenderer
 from django.utils.safestring import mark_safe
@@ -5,34 +6,28 @@ from django.utils.encoding import force_unicode
 
 from .models import Evaluation, Voter
 
-class MyRFRenderer(RadioFieldRenderer):
-    """
-    Custom rendering for the RadioSelect: We need them side to side.
-    Default rendering makes <ul><li>
-    """
-    def render(self):
-        return mark_safe(
-            u'<div id="rating">\n%s\n</div><!-- end #rating -->\n' % u'\n'.join([u'%s'% force_unicode(w) for w in self])
-            )
-
 class EvaluationForm(ModelForm):
+    """
+    Model for the evalutation form
+    """
     class Meta(object):
         model = Evaluation
-        fields = ('value', 'message')
+        fields = ("value", 'message',)
         widgets = {
-            'value': RadioSelect(attrs={'class':'star'}, renderer=MyRFRenderer)
+            'value': RadioSelect(attrs={'class':'star'},
+                                choices=('<br/>','<br/>','<br/>',))
             }
 
     def custom_display(self):
         if hasattr(self, "display_errors") and not self.display_errors:
-            normal_row = u'<p%(html_class_attr)s><b>%(label)s</b> <br/> %(field)s%(help_text)s</p>'
+            normal_row = u'<p%(html_class_attr)s><b>%(label)s</b> <br/> %(field)s%(help_text)s</p><br/>'
         else:
-            normal_row = u'<p%(html_class_attr)s><b>%(label)s</b> <br/> %(field)s%(help_text)s<font color="ForestGreen">%(errors)s</font></p>'
+            normal_row = u'<p%(html_class_attr)s><b>%(label)s</b> <br/> %(field)s%(help_text)s<font color="ForestGreen">%(errors)s</font></p><br/>'
 
         return self._html_output(
             normal_row = normal_row,
             error_row = u'',
-            row_ender = '</p>',
+            row_ender = '</p><br/>',
             help_text_html = u' <span class="helptext">%s</span>',
             errors_on_separate_row = False)
 
