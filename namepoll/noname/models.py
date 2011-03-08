@@ -16,10 +16,10 @@ class CompanyName(models.Model):
         max_length=1024,
         upload_to=expanduser('~/noname/uploaded_images/')
     )
-    free_brand = models.BooleanField(_('Brand is free'))
-    free_dotcom = models.BooleanField(_('.com is free'))
-    free_dotfr = models.BooleanField(_('.fr is free'))
-    free_dotnet = models.BooleanField(_('.net is free'))
+    free_brand = models.BooleanField(_('Brand is available'))
+    free_dotcom = models.BooleanField(_('.com is available'))
+    free_dotfr = models.BooleanField(_('.fr is available'))
+    free_dotnet = models.BooleanField(_('.net is available'))
 
     def __unicode__(self):
         return self.name
