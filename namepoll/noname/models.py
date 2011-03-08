@@ -1,7 +1,8 @@
-#-*-coding:utf-8-*-
+#coding:utf-8
 from os.path import expanduser
 
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 
 class CompanyName(models.Model):
@@ -15,21 +16,25 @@ class CompanyName(models.Model):
         max_length=1024,
         upload_to=expanduser('~/noname/uploaded_images/')
     )
-    free_brand = models.BooleanField('Brand is free')
-    free_dotcom = models.BooleanField('.com is free')
-    free_dotfr = models.BooleanField('.fr is free')
-    free_dotnet = models.BooleanField('.net is free')
+    free_brand = models.BooleanField(_('Brand is free'))
+    free_dotcom = models.BooleanField(_('.com is free'))
+    free_dotfr = models.BooleanField(_('.fr is free'))
+    free_dotnet = models.BooleanField(_('.net is free'))
 
     def __unicode__(self):
         return self.name
 
     def _availability(self):
-        yield 'brand (INPI)', self.free_brand
-        yield '.com TLD', self.free_dotcom
-        yield '.fr TLD', self.free_dotfr
-        yield '.net TLD ', self.free_dotnet
+        yield _('brand (INPI))'), self.free_brand
+        yield _('.com TLD'), self.free_dotcom
+        yield _('.fr TLD'), self.free_dotfr
+        yield _('.net TLD'), self.free_dotnet
 
     availability = property(fget=_availability)
+
+    class Meta(object):
+        verbose_name = _('company name')
+        verbose_name_plural = _('company names')
 
 
 class Voter(models.Model):
@@ -47,18 +52,22 @@ class Voter(models.Model):
     def __unicode__(self):
         return "I am a voter"
 
+    class Meta(object):
+        verbose_name = _('voter')
+        verbose_name_plural = _('voters')
+
 
 class Evaluation(models.Model):
     """
         Evaluation's model
     """
     VALUES = (
-        (0, 'Prejudiciable'),
-        (1, 'Valid'),
-        (2, 'Great'),
+        (0, _('Prejudiciable')),
+        (1, _('Valid')),
+        (2, _('Great')),
     )
     value = models.IntegerField(
-        "What do you think this name would be to our company?",
+        _("What do you think this name would be to our company?"),
         choices=VALUES,
         default=-1)
     message = models.TextField(max_length=300)
@@ -66,3 +75,6 @@ class Evaluation(models.Model):
     subject = models.ForeignKey(CompanyName)
     eval_date = models.DateTimeField()
 
+    class Meta(object):
+        verbose_name = _('evaluation')
+        verbose_name_plural = _('evaluations')
