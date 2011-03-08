@@ -134,7 +134,7 @@ def results(request):
     for company in CompanyName.objects.all():
         result = 0
         for evaluation in Evaluation.objects.filter(subject=company.name):
-            result += evaluation.value
+            result += evaluation.value * evaluation.author.weight
         results.append((company.name, result))
 
     variables = {
