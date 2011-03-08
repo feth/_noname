@@ -11,8 +11,19 @@
 <h1>Results</h1>
 {% if results %}
     <ul>
-    {% for name, result in results %}
-        <li><a href="{% url detail  name %}">{{ name }}</a> {{ result }}</li>
+    {% for name, result, percent in results %}
+    <li><a href="{% url detail  name %}">{{ name }}</a> {{ result }}
+    <table cellpadding='0' cellspacing='0' class='result'><tr>
+            <!-- Adding some graphical view of the results -->
+            <td class='voteok' style='width:{{ percent }}%'><br />
+            </td>
+            {% if percent == 0 %}
+            <td class='votenook' style='width:100%'><br /></td>
+            {% else %}
+            <td class='votenook'><br /></td>
+            {% endif %}
+            </tr></table>
+    <div></div></li>
     {% endfor %}
     </ul>
 {% else %}

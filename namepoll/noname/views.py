@@ -129,12 +129,18 @@ def detail(request, pk):
     return _render(request, 'noname/detail.html', variables)
 
 def results(request):
-    results = []
+    _results = []
+    num_result = len(CompanyName.objects.all())
     for company in CompanyName.objects.all():
         result = 0
         for evaluation in Evaluation.objects.filter(subject=company.name):
             result += evaluation.value * evaluation.author.weight
-        results.append((company.name, result))
+        _results.append((company.name, result))
+    total = 0
+    for name, res in _results:
+        total += res
+    results = [(name, res, int(float(res*100)/total)) for name, res in _results]
+
 
     variables = {
         'results': results

@@ -89,3 +89,16 @@ fieldset{
 #evalform label{
     padding-left:5px;
 }
+/*
+ * Graphical result colors
+ */
+table.result{
+    width:300px;
+    border:1px solid #80a558;
+}
+.voteok{
+    background-color:#dedede;
+}
+.votenook{
+    background-color:#c0c0c0;
+}
