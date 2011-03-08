@@ -1,4 +1,4 @@
-#-*-coding:utf-8-*-
+#coding: utf-8
 from django.forms import ModelForm, RadioSelect
 from django.forms.widgets import RadioFieldRenderer
 from django.utils.safestring import mark_safe
