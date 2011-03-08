@@ -35,6 +35,7 @@ class Voter(models.Model):
     pages_seen = models.ManyToManyField(CompanyName, related_name="seen")
     #redundant with evaluations but quite quicker
     pages_voted = models.ManyToManyField(CompanyName, related_name="voted")
+    weight = models.IntegerField(default=1)
 
     def __unicode__(self):
         return "I am a voter"

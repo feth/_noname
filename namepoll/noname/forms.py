@@ -40,7 +40,7 @@ class EvaluationForm(ModelForm):
 class VoterForm(ModelForm):
     class Meta(object):
         model = Voter
-        exclude = ('pages_seen', 'pages_voted')
+        exclude = ('pages_seen', 'pages_voted', 'weight')
 
     def custom_display(self):
         return self._html_output(
