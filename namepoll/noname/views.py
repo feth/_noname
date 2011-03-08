@@ -83,7 +83,7 @@ def detail(request, pk):
         voter.save()
 
     try:
-        evaluation = Evaluation.objects.get(subject=companyname)
+        evaluation = Evaluation.objects.get(subject=companyname, author=voter)
     except Evaluation.DoesNotExist, e:
         evaluation = None
 
