@@ -1,1 +1,3 @@
-[{"pk": "Puma", "model": "noname.companyname", "fields": {"free_dotfr": false, "free_brand": false, "explanation": "Un gentil et mignon f\u00e9lin jusqu'\u00e0 l'\u00e2ge de 3 mois.", "free_dotnet": false, "image": "", "free_dotcom": false}}]
+[{"pk": "Puma", "model": "noname.companyname", "fields": {"free_dotfr": false, "free_brand": false, "explanation": "Un gentil et mignon f\u00e9lin jusqu'\u00e0 l'\u00e2ge de 3 mois.", "free_dotnet": false, "image": "", "free_dotcom": false}},
+{"pk": "CatoPuma", "model": "noname.companyname", "fields": {"free_dotfr": false, "free_brand": false, "explanation": "Un felin.", "free_dotnet": false, "image": "", "free_dotcom": false}},
+{"pk": "BlueLynx", "model": "noname.companyname", "fields": {"free_dotfr": false, "free_brand": false, "explanation": "Bleu, couleur de la qualité, Lynx l'animal.", "free_dotnet": false, "image": "", "free_dotcom": false}}]
