@@ -44,7 +44,6 @@ def _next(voter):
     #a relative path. We are 'appname/next'
     new_company_name = choice(list(remaining)).name
     newpath = reverse('detail', args=(new_company_name,))
-    print newpath
     return HttpResponseRedirect(newpath)
 
 
