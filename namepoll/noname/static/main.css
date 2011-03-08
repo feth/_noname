@@ -1,7 +1,7 @@
 div.content,div.forms
 {
     /*float: left;*/
-    border: thin silver solid;
+    border: thin #80a558 solid;
     margin: 0.5em;
     padding: 0.5em;
     text-align:left;
@@ -20,15 +20,26 @@ div.contentbox
 {
     text-align:center;
     float: left;
+    width:30%;
 }
 div.foldable,p.trigger
 {
     margin:0px;
     padding:5px;
     text-align:center;
-    background:#e5eecc;
-    border:solid 1px #c3c3c3;
+    /*background:#e5eecc;*/
+    border:solid 1px #80a558;
 }
+p.trigger{
+    background-color:#c1e746;
+}
+div.foldable{
+/*    background-color:#80a558;*/
+}
+/*80a558 : vert
+ff8a0c : orange
+d4d4d4 : gris
+*/
 .trigger:hover
 {
     background:#ffffff;
@@ -58,15 +69,17 @@ tr.row2
 {
     background:#dfdfdf;
 }
-h1 #companyname
+h1#companyname
 {
     text-align: center;
+    border:1px solid #80a558;
 }
 #evalform ul{
     list-style:none;
+    height:64px;
 }
 fieldset{
-    border:1px solid #e5e5e5;
+    border:1px solid #80a558;
     padding-bottom:10px;
     margin-bottom:15px;
 }

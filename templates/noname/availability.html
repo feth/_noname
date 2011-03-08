@@ -5,7 +5,7 @@
 {% for item, value in companyname.availability %}
 <tr class="{% cycle 'row1' 'row2' %}">
 <td>{{ item }}</td>
-<td class="{% if value %}avail">{% else %}unavail">N{% endif %}OK</td>
+<td class="{% if value %}avail">{% else %}unavail">Not{% endif %} Available</td>
 </tr>
 {% endfor %}
 </table>

@@ -3,7 +3,7 @@ Use hide="anything" to hide this block by default
 {% endcomment %}
 <div class="contentbox" id="{{ title }}">
 <p class="trigger" id="show_{{ title }}">
-[{% if hide %}-{% else %}+{% endif %}] {{ title }}
+[{% if hide %}+{% else %}-{% endif %}] {{ title }}
 </p>
 <div class="foldable" id="{{ title }}_inner"{% if hide %} style="display:none;"{% endif %}>
 	{% block content %}{% endblock %}
@@ -11,15 +11,16 @@ Use hide="anything" to hide this block by default
 </div><!-- end #{{ title }} -->
 <script type="text/javascript">
 $(document).ready(function(){
-    var {{ title }}_isshown = false;
-    $("#show_{{ title }}").click(function(){
+        $("#show_{{ title }}").click(function(){
+        var isShown = true;
+        if ($("#{{ title }}_inner").css('display')=='none'){
+            var isShown = false;
+        }
         $("#{{ title }}_inner").slideToggle("slow");
-        if ({{ title }}_isshown) {
+        if (isShown) {
             $("#show_{{ title }}").text("[+] {{ title }}");
-            {{ title }}_isshown = false;
         } else {
             $("#show_{{ title }}").text("[-] {{ title }}");
-            {{ title }}_isshown = true;
         }
     });
 });
