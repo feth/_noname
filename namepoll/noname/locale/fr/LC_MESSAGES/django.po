@@ -20,72 +20,72 @@ msgstr ""
 
 #: models.py:19
 msgid "Brand is available"
-msgstr ""
+msgstr "La marque est disponible"
 
 #: models.py:20
 msgid ".com is available"
-msgstr ""
+msgstr "Le .com est disponible"
 
 #: models.py:21
 msgid ".fr is available"
-msgstr ""
+msgstr "Le .fr est disponible"
 
 #: models.py:22
 msgid ".net is available"
-msgstr ""
+msgstr "Le .net est disponible"
 
 #: models.py:28
 msgid "brand (INPI))"
-msgstr ""
+msgstr "marque (INPI)"
 
 #: models.py:29
 msgid ".com TLD"
-msgstr ""
+msgstr "TLD .com"
 
 #: models.py:30
 msgid ".fr TLD"
-msgstr ""
+msgstr "TLD .fr"
 
 #: models.py:31
 msgid ".net TLD"
-msgstr ""
+msgstr "TLD .net"
 
 #: models.py:36
 msgid "company name"
-msgstr ""
+msgstr "nom d'entreprise"
 
 #: models.py:37
 msgid "company names"
-msgstr ""
+msgstr "noms d'entreprise"
 
 #: models.py:56
 msgid "voter"
-msgstr ""
+msgstr "votant"
 
 #: models.py:57
 msgid "voters"
-msgstr ""
+msgstr "votants"
 
 #: models.py:65
 msgid "Prejudiciable"
-msgstr ""
+msgstr "Prejudiciable"
 
 #: models.py:66
 msgid "Valid"
-msgstr ""
+msgstr "Acceptable"
 
 #: models.py:67
 msgid "Great"
-msgstr ""
+msgstr "Positif"
 
 #: models.py:70
 msgid "What do you think this name would be to our company?"
-msgstr ""
+msgstr "Que pensez-vous que ce nom serait pour notre entreprise ?"
 
 #: models.py:79
 msgid "evaluation"
-msgstr ""
+msgstr "évaluation"
 
 #: models.py:80
 msgid "evaluations"
-msgstr ""
+msgstr "évaluations"
