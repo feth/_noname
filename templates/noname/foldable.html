@@ -2,27 +2,11 @@
 Use hide="anything" to hide this block by default
 {% endcomment %}
 <div class="contentbox" id="{{ title }}">
-<p class="trigger" id="show_{{ title }}">
+    <p class="trigger" id="show_{{ title }}" _content="{{ title }}_inner">
 [{% if hide %}+{% else %}-{% endif %}] {{ title }}
 </p>
 <div class="foldable" id="{{ title }}_inner"{% if hide %} style="display:none;"{% endif %}>
 	{% block content %}{% endblock %}
 </div><!-- end #{{ title }}_inner -->
 </div><!-- end #{{ title }} -->
-<script type="text/javascript">
-$(document).ready(function(){
-        $("#show_{{ title }}").click(function(){
-        var isShown = true;
-        if ($("#{{ title }}_inner").css('display')=='none'){
-            var isShown = false;
-        }
-        $("#{{ title }}_inner").slideToggle("slow");
-        if (isShown) {
-            $("#show_{{ title }}").text("[+] {{ title }}");
-        } else {
-            $("#show_{{ title }}").text("[-] {{ title }}");
-        }
-    });
-});
-</script>
 

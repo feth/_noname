@@ -11,6 +11,12 @@
                 });
             });
 
+        </script>
+<script type="text/javascript" src="{{ STATIC_URL }}main.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.trigger').click(noname['trigger']['click']);
+    });
 </script>
 {% endblock %}
 {% block css %}
@@ -70,4 +76,3 @@
 {{ page }}
 {% endfor %}
 {% endblock body %}
-
