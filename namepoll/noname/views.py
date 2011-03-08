@@ -1,14 +1,13 @@
-from datetime import datetime, date
+from datetime import date, datetime
 from random import choice
 
-from django.template import RequestContext
-from django.template import loader
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.template import RequestContext, loader
 
-from noname.models import CompanyName, Voter, Evaluation
 from noname.forms import EvaluationForm, VoterForm
+from noname.models import CompanyName, Evaluation, Voter
 
 SESSIONS_EXPIRY = datetime(2011, 12, 31, 23, 59, 59, 999)
 
