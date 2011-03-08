@@ -50,7 +50,10 @@ class Voter(models.Model):
     weight = models.IntegerField(default=1)
 
     def __unicode__(self):
-        return "I am a voter"
+        unicode_string = u"Voter %d" % self.id
+        if self.optional_nickname:
+            unicode_string += u", %s" % self.optional_nickname
+        return unicode_string
 
     class Meta(object):
         verbose_name = _('voter')
