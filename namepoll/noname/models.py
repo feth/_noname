@@ -44,9 +44,11 @@ class Voter(models.Model):
     optional_nickname = models.CharField(max_length=100, blank=True)
     optional_email = models.EmailField(max_length=100, blank=True)
     optional_info = models.TextField(blank=True)
-    pages_seen = models.ManyToManyField(CompanyName, related_name="seen")
+    pages_seen = models.ManyToManyField(CompanyName, related_name="seen",
+                                        blank=True)
     #redundant with evaluations but quite quicker
-    pages_voted = models.ManyToManyField(CompanyName, related_name="voted")
+    pages_voted = models.ManyToManyField(CompanyName, related_name="voted",
+                                         blank=True)
     weight = models.IntegerField(default=1)
 
     def __unicode__(self):
