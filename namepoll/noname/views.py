@@ -83,7 +83,7 @@ def detail(request, pk):
         voter.save()
 
     try:
-        evaluation = Evaluation.objects.get(subject=companyname)
+        evaluation = Evaluation.objects.get(subject=companyname, author=voter)
     except Evaluation.DoesNotExist, e:
         evaluation = None
 
@@ -129,6 +129,18 @@ def detail(request, pk):
     }
     return _render(request, 'noname/detail.html', variables)
 
+def results(request):
+    results = []
+    for company in CompanyName.objects.all():
+        result = 0
+        for evaluation in Evaluation.objects.filter(subject=company.name):
+            result += evaluation.value * evaluation.author.weight
+        results.append((company.name, result))
+
+    variables = {
+        'results': results
+    }
+    return _render(request, 'noname/results.html', variables)
 
 def index(request):
     voter_id = _voter(request)

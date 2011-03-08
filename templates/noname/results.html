@@ -1,0 +1,23 @@
+{% extends "noname/page.html" %}
+
+{% block jsfunctions %}
+{% endblock %}
+
+{% block title %}Noname inc.{% endblock %}
+
+
+{% block body %}
+<div id="contents" style="float: left; width: 50em; border: thin silver solid; margin: 0.5em; padding: 0.5em;">
+<h1>Results</h1>
+{% if results %}
+    <ul>
+    {% for name, result in results %}
+        <li><a href="{% url detail  name %}">{{ name }}</a> {{ result }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No proposed company names are available.</p>
+{% endif %}
+</div>
+{% endblock body%}
+{% block nav %}{% include "noname/nav.html" with title="Navigation" navskip="index next" only %}{% endblock nav %}
