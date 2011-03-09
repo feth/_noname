@@ -101,7 +101,7 @@ class Evaluation(models.Model):
         choices=VALUES,
         default=-1)
     message = models.TextField(max_length=300)
-    author = models.ForeignKey(Voter)
+    author = models.ForeignKey(Voter, related_name="evaluations")
     subject = models.ForeignKey(CompanyName, related_name="evaluations")
     eval_date = models.DateTimeField()
 

@@ -5,7 +5,6 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.template import RequestContext, loader
-from django.utils.translation import ugettext as _
 
 from noname.forms import EvaluationForm, VoterForm
 from noname.models import CompanyName, Evaluation, Voter
@@ -28,9 +27,9 @@ def _voter(request):
     #make a default voter
     voter = Voter()
     voter.save() #so it's guaranteed to have an id
-    request.session["voter"] = voter.id
+    request.session["voter"] = voter
 
-    return voter.id
+    return voter
 
 
 def _next(voter):
@@ -54,20 +53,61 @@ def _render(request, templatename, variables):
 
 
 def thankyou(request):
-    voter_id = _voter(request)
-    voter = Voter.objects.get(id=voter_id)
+    voter = _voter(request)
     return _render(request, 'noname/thankyou.html', {'voter': voter})
 
 
 def next(request):
-    voter_id = _voter(request)
-    voter = Voter.objects.get(id=voter_id)
+    voter = _voter(request)
     return _next(voter)
 
 
+def _eval_and_form(voter, companyname, request):
+
+    evaluations_tuple = voter.evaluations.filter(subject=companyname)
+    evaluation = evaluations_tuple[0] if evaluations_tuple else None
+    form_kwarg = {'instance': evaluation} if evaluation else {}
+
+    if request.POST:
+        return evaluation, EvaluationForm(request.POST, **form_kwarg)
+
+    return evaluation, EvaluationForm(**form_kwarg)
+
+
+def _valid_evaluation(voter, companyname, form, evaluation):
+    """
+    form is valid.
+    evaluation may be None.
+    this function saves voter
+    """
+    if evaluation is None:
+        evaluation = Evaluation()
+
+    evaluation.author = voter
+    evaluation.subject = companyname
+    evaluation.eval_date = date.today()
+    evaluation.value = form.cleaned_data['value']
+    evaluation.message = form.cleaned_data['message']
+    evaluation.save()
+
+    voter.pages_voted.add(companyname)
+    voter.save()
+
+    return _next(voter)
+
+
+def _update_voter(voter, form):
+    """
+    form is valid
+    function does NOT save voter.
+    """
+    voter.optional_nickname = form.cleaned_data['optional_nickname']
+    voter.optional_email = form.cleaned_data['optional_email']
+    voter.optional_info = form.cleaned_data['optional_info']
+
+
 def detail(request, pk):
-    voter_id = _voter(request)
-    voter = Voter.objects.get(id=voter_id)
+    voter = _voter(request)
     companyname = get_object_or_404(CompanyName, pk=pk)
     voter.pages_seen.add(companyname)
 
@@ -76,43 +116,15 @@ def detail(request, pk):
     else:
         voterform = VoterForm(request.POST, instance=voter)
 
-    if request.POST and voterform.is_valid():
-        voter.optional_nickname = voterform.cleaned_data['optional_nickname']
-        voter.optional_email = voterform.cleaned_data['optional_email']
-        voter.optional_info = voterform.cleaned_data['optional_info']
-        voter.save()
+    update_voter = request.POST and voterform.is_valid()
+    if update_voter:
+        _update_voter(voter, voterform)
 
-    try:
-        evaluation = Evaluation.objects.get(subject=companyname, author=voter)
-    except Evaluation.DoesNotExist, e:
-        evaluation = None
-
-    if not evaluation:
-        evalform = EvaluationForm(request.POST)
-    elif not request.POST:
-        evalform = EvaluationForm(instance=evaluation)
-    else:
-        evalform = EvaluationForm(request.POST, instance=evaluation)
-
-    if request.POST and evalform.is_valid():
-        if not evaluation:
-            # XXX: @feth check me : we rewrite over a previous evaluation if we
-            # found one.
-            evaluation = Evaluation()
-
-        evaluation.author = voter
-        evaluation.subject = companyname
-        evaluation.eval_date = date.today()
-
-        evaluation.value = evalform.cleaned_data['value']
-        evaluation.message = evalform.cleaned_data['message']
-
-        evaluation.save()
-
-        voter.pages_voted.add(companyname)
-        return _next(voter)
+    evaluation, evalform = _eval_and_form(voter, companyname, request)
 
     if request.POST:
+        if evalform.is_valid():
+            return _valid_evaluation(voter, companyname, evalform, evaluation)
         # Here, the user posted some data but the evalform wasn't valid (see
         # above) so we display erros. See also EvaluationForm.custom_display.
         evalform.display_errors = True
@@ -120,6 +132,9 @@ def detail(request, pk):
         # Here, the user didn't post any data so it's the first time he sees the
         # page: we don't display errors.
         evalform.display_errors = False
+
+    if update_voter:
+        voter.save()
 
     variables = {
         'companyname': companyname,
@@ -143,8 +158,7 @@ def results(request):
 
 
 def index(request):
-    voter_id = _voter(request)
-    voter = Voter.objects.get(id=voter_id)
+    voter = _voter(request)
     variables = {
         'voter': voter,
         'all_proposed_names': CompanyName.objects.all(),
