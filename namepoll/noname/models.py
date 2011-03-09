@@ -36,6 +36,25 @@ class CompanyName(models.Model):
         verbose_name = _('company name')
         verbose_name_plural = _('company names')
 
+    def normscore(self):
+        """
+        Gets you the normalized score for this company name
+        and the number of evaluations that it got
+        """
+        evaluations = self.evaluations.all()
+
+        if not evaluations:
+            return 'N/A', 0
+
+        evaluations_nb = evaluations.count()
+
+        total = sum(
+            evaluation.value * evaluation.author.weight
+            for evaluation in evaluations
+            )
+
+        return total / evaluations_nb, evaluations_nb
+
 
 class Voter(models.Model):
     """
@@ -77,7 +96,7 @@ class Evaluation(models.Model):
         default=-1)
     message = models.TextField(max_length=300)
     author = models.ForeignKey(Voter)
-    subject = models.ForeignKey(CompanyName)
+    subject = models.ForeignKey(CompanyName, related_name="evaluations")
     eval_date = models.DateTimeField()
 
     class Meta(object):

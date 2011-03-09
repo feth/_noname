@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.template import RequestContext, loader
+from django.utils.translation import ugettext as _
 
 from noname.forms import EvaluationForm, VoterForm
 from noname.models import CompanyName, Evaluation, Voter
@@ -128,19 +129,12 @@ def detail(request, pk):
     }
     return _render(request, 'noname/detail.html', variables)
 
-def results(request):
-    _results = []
-    num_result = len(CompanyName.objects.all())
-    for company in CompanyName.objects.all():
-        result = 0
-        for evaluation in Evaluation.objects.filter(subject=company.name):
-            result += evaluation.value * evaluation.author.weight
-        _results.append((company.name, result))
-    total = 0
-    for name, res in _results:
-        total += res
-    results = [(name, res, int(float(res*100)/total)) for name, res in _results]
 
+def results(request):
+    results = (
+        (companyname, companyname.normscore())
+        for companyname in CompanyName.objects.all()
+        )
 
     variables = {
         'results': results
