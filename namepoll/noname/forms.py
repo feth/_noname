@@ -1,14 +1,12 @@
 #coding: utf-8
 from django.forms import ModelForm, RadioSelect
-from django.forms.widgets import RadioFieldRenderer
-from django.utils.safestring import mark_safe
-from django.utils.encoding import force_unicode
 
 from .models import Evaluation, Voter
 
+
 class EvaluationForm(ModelForm):
     """
-    Model for the evalutation form
+    Model for the evaluation form
     """
     class Meta(object):
         model = Evaluation
@@ -43,3 +41,4 @@ class VoterForm(ModelForm):
             row_ender = '</p>',
             help_text_html = u' <span class="helptext">%s</span>',
             errors_on_separate_row = False)
+
