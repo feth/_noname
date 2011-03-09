@@ -38,13 +38,15 @@ class CompanyName(models.Model):
 
     def normscore(self):
         """
-        Gets you the normalized score for this company name
-        and the number of evaluations that it got
+        Gets you
+        * the normalized score for this company name
+        * the value in percentage
+        * the number of evaluations that it got
         """
         evaluations = self.evaluations.all()
 
         if not evaluations:
-            return 'N/A', 0
+            return 0, 0, 0
 
         evaluations_nb = evaluations.count()
 
@@ -53,7 +55,11 @@ class CompanyName(models.Model):
             for evaluation in evaluations
             )
 
-        return total / evaluations_nb, evaluations_nb
+        mean = total / evaluations_nb
+
+        #50 because it is 100/2
+        #2 is greater value: for 'great'
+        return mean, 50*mean, evaluations_nb
 
 
 class Voter(models.Model):
