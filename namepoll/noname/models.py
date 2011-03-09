@@ -1,4 +1,5 @@
 #coding:utf-8
+from datetime import date
 from os.path import expanduser
 
 from django.db import models
@@ -86,6 +87,14 @@ class Voter(models.Model):
         verbose_name = _('voter')
         verbose_name_plural = _('voters')
 
+    def get_evaluation(self, companyname):
+        evaluations_tuple = self.evaluations.filter(subject=companyname)
+        if evaluations_tuple:
+            return evaluations_tuple[0]
+        evaluation = Evaluation()
+        evaluation.date_of_creation = date.today()
+        return evaluation
+
 
 class Evaluation(models.Model):
     """
@@ -99,12 +108,16 @@ class Evaluation(models.Model):
     value = models.IntegerField(
         _("What do you think this name would be to our company?"),
         choices=VALUES,
-        default=-1)
-    message = models.TextField(max_length=300)
+        default=-1,
+        blank=True)
+    message = models.TextField(max_length=300, blank=True)
     author = models.ForeignKey(Voter, related_name="evaluations")
     subject = models.ForeignKey(CompanyName, related_name="evaluations")
-    eval_date = models.DateTimeField()
+    date_of_creation = models.DateTimeField()
+    date_of_modification = models.DateTimeField()
 
     class Meta(object):
         verbose_name = _('evaluation')
         verbose_name_plural = _('evaluations')
+
+
