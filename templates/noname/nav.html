@@ -6,5 +6,6 @@
 {% else %}<span style="display:block;"><a href="{% url index %}" title="See all proposed names in line">All proposed names</a></span>{% endif %}
 {% if not "next" in navskip %}<span style="display:block;"><a href="{% url random-new %}" title="See an other proposed name">Show another name</a></span> {% endif %}
 <span style="display:block;"><a href="/admin" title="This is where admins go">admin</a></span>
+<span style="display:block;"><a href="{% url results %}" title="Results">results</a></span>
 </p>
 {% endblock %}
