@@ -62,79 +62,75 @@ def next(request):
     return _next(voter)
 
 
-def _eval_and_form(voter, companyname, request):
-
-    evaluations_tuple = voter.evaluations.filter(subject=companyname)
-    evaluation = evaluations_tuple[0] if evaluations_tuple else None
-    form_kwarg = {'instance': evaluation} if evaluation else {}
-
-    if request.POST:
-        return evaluation, EvaluationForm(request.POST, **form_kwarg)
-
-    return evaluation, EvaluationForm(**form_kwarg)
-
-
-def _valid_evaluation(voter, companyname, form, evaluation):
+def _saveforms(request, forms):
     """
-    form is valid.
-    evaluation may be None.
-    this function saves voter
+    Saves if applicable, and yields True or False if saved.
+    Does NOT commit to DB.
     """
-    if evaluation is None:
-        evaluation = Evaluation()
+    if not request.POST:
+        for form in forms:
+            yield False
+        return
 
-    evaluation.author = voter
-    evaluation.subject = companyname
-    evaluation.eval_date = date.today()
-    evaluation.value = form.cleaned_data['value']
-    evaluation.message = form.cleaned_data['message']
-    evaluation.save()
-
-    voter.pages_voted.add(companyname)
-    voter.save()
-
-    return _next(voter)
-
-
-def _update_voter(voter, form):
-    """
-    form is valid
-    function does NOT save voter.
-    """
-    voter.optional_nickname = form.cleaned_data['optional_nickname']
-    voter.optional_email = form.cleaned_data['optional_email']
-    voter.optional_info = form.cleaned_data['optional_info']
-
+    for form in forms:
+        try:
+            form.save(commit=False)
+        except ValueError:
+            form.display_errors = True
+            yield False
+        else:
+            yield True
 
 def detail(request, pk):
     voter = _voter(request)
     companyname = get_object_or_404(CompanyName, pk=pk)
     voter.pages_seen.add(companyname)
+    evaluation = voter.get_evaluation(companyname)
 
-    if not request.POST:
-        voterform = VoterForm(instance=voter)
-    else:
-        voterform = VoterForm(request.POST, instance=voter)
+    #seems request.POST can be None safely
+    evalform = EvaluationForm(request.POST, instance=evaluation)
+    voterform = VoterForm(request.POST, instance=voter)
 
-    update_voter = request.POST and voterform.is_valid()
-    if update_voter:
-        _update_voter(voter, voterform)
+    forms = evalform, voterform
 
-    evaluation, evalform = _eval_and_form(voter, companyname, request)
+    #Does NOT commit to DB.
+    eval_data, voter_data = _saveforms(request, forms)
+
+    voterform.save(commit=False)
+
+    #info that was not supplied in forms
+    if eval_data:
+        evalform.save(commit=False)
+        if evaluation.value == '':
+            evaluation.value = -1
+
+        #manually tweak evaluation
+        evaluation.author = voter
+        evaluation.subject = companyname
+        evaluation.date_of_modification = date.today()
+
+        #manually tweak voter
+        voter.pages_voted.add(companyname)
+        #And now we commit to db
+
+        #voting is done, let's go to next page
+        voterform.save_m2m()
+        evalform.save_m2m()
+        #BUG: save_m2m should have saved, but the eval is not in db unless this:
+        evaluation.save()
+        return _next(voter)
+
+    voterform.save()
 
     if request.POST:
-        if evalform.is_valid():
-            return _valid_evaluation(voter, companyname, evalform, evaluation)
         # Here, the user posted some data but the evalform wasn't valid (see
         # above) so we display erros. See also EvaluationForm.custom_display.
-        evalform.display_errors = True
+        for form in forms:
+            form.display_errors = True
     else:
         # Here, the user didn't post any data so it's the first time he sees the
         # page: we don't display errors.
         evalform.display_errors = False
-
-    if update_voter:
-        voter.save()
 
     variables = {
         'companyname': companyname,
