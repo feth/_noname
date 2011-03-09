@@ -25,7 +25,7 @@
             </tr>
     </table>
     <a href="{% url detail  name %}">{{ name }}:</a> {{ result }}
-    {% if evaluations_nb == 1%}{{ mean }} (1 evaluation){% else %}{% if evaluations_nb %}{{ mean }} ({{ evaluations_nb }} evaluations_nb){% else %}No evaluation yet{% endif %}{% endif %}
+    {% if evaluations_nb == 1%}{{ mean }} (1 evaluation){% else %}{% if evaluations_nb %}{{ mean }} ({{ evaluations_nb }} evaluations){% else %}Not evaluated yet{% endif %}{% endif %}
     <div></div></li>
     {% endfor %}
     </ul>
