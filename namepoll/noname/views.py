@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.template import RequestContext, loader
 
 from noname.forms import EvaluationForm, VoterForm
-from noname.models import CompanyName, Evaluation, Voter
+from noname.models import CompanyName, Voter
 
 SESSIONS_EXPIRY = datetime(2011, 12, 31, 23, 59, 59, 999)
 
