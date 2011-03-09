@@ -132,7 +132,7 @@ def detail(request, pk):
 
 def results(request):
     results = (
-        (companyname, companyname.normscore())
+        (companyname,) + companyname.normscore()
         for companyname in CompanyName.objects.all()
         )
 
@@ -140,6 +140,7 @@ def results(request):
         'results': results
     }
     return _render(request, 'noname/results.html', variables)
+
 
 def index(request):
     voter_id = _voter(request)
