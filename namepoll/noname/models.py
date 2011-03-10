@@ -1,4 +1,5 @@
 #coding:utf-8
+from datetime import date
 from os.path import expanduser
 
 from django.db import models
@@ -36,6 +37,31 @@ class CompanyName(models.Model):
         verbose_name = _('company name')
         verbose_name_plural = _('company names')
 
+    def normscore(self):
+        """
+        Gets you
+        * the normalized score for this company name
+        * the value in percentage
+        * the number of evaluations that it got
+        """
+        evaluations = self.evaluations.all()
+
+        if not evaluations:
+            return 0, 0, 0
+
+        evaluations_nb = evaluations.count()
+
+        total = sum(
+            evaluation.value * evaluation.author.weight
+            for evaluation in evaluations
+            )
+
+        mean = total / evaluations_nb
+
+        #50 because it is 100/2
+        #2 is greater value: for 'great'
+        return mean, 50*mean, evaluations_nb
+
 
 class Voter(models.Model):
     """
@@ -61,6 +87,14 @@ class Voter(models.Model):
         verbose_name = _('voter')
         verbose_name_plural = _('voters')
 
+    def get_evaluation(self, companyname):
+        evaluations_tuple = self.evaluations.filter(subject=companyname)
+        if evaluations_tuple:
+            return evaluations_tuple[0]
+        evaluation = Evaluation()
+        evaluation.date_of_creation = date.today()
+        return evaluation
+
 
 class Evaluation(models.Model):
     """
@@ -74,12 +108,16 @@ class Evaluation(models.Model):
     value = models.IntegerField(
         _("What do you think this name would be to our company?"),
         choices=VALUES,
-        default=-1)
-    message = models.TextField(max_length=300)
-    author = models.ForeignKey(Voter)
-    subject = models.ForeignKey(CompanyName)
-    eval_date = models.DateTimeField()
+        default=-1,
+        blank=True)
+    message = models.TextField(max_length=300, blank=True)
+    author = models.ForeignKey(Voter, related_name="evaluations")
+    subject = models.ForeignKey(CompanyName, related_name="evaluations")
+    date_of_creation = models.DateTimeField()
+    date_of_modification = models.DateTimeField()
 
     class Meta(object):
         verbose_name = _('evaluation')
         verbose_name_plural = _('evaluations')
+
+

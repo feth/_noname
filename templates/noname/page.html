@@ -5,6 +5,12 @@
 <head>
 
 <script type="text/javascript" src="{{ STATIC_URL }}jquery.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}main.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.trigger').click(noname['trigger']['click']);
+    });
+</script>
 {% block jsfunctions %}{% endblock %}
 
 <link href="{{ STATIC_URL }}main.css" rel="stylesheet" type="text/css"/>

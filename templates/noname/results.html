@@ -11,8 +11,22 @@
 <h1>Results</h1>
 {% if results %}
     <ul>
-    {% for name, result in results %}
-        <li><a href="{% url detail  name %}">{{ name }}</a> {{ result }}</li>
+    {% for name, mean, percent, evaluations_nb in results %}
+    <li>
+    <table cellpadding='0' cellspacing='0' class='result'><tr>
+            <!-- Adding some graphical view of the results -->
+            <td class='voteok' style='width:{{ percent }}%'><br />
+            </td>
+            {% if percent == 0 %}
+            <td class='votenook' style='width:100%'><br /></td>
+            {% else %}
+            <td class='votenook'><br /></td>
+            {% endif %}
+            </tr>
+    </table>
+    <a href="{% url detail  name %}">{{ name }}:</a> {{ result }}
+    {% if evaluations_nb == 1%}{{ mean }} (1 evaluation){% else %}{% if evaluations_nb %}{{ mean }} ({{ evaluations_nb }} evaluations){% else %}Not evaluated yet{% endif %}{% endif %}
+    <div></div></li>
     {% endfor %}
     </ul>
 {% else %}
@@ -20,4 +34,4 @@
 {% endif %}
 </div>
 {% endblock body%}
-{% block nav %}{% include "noname/nav.html" with title="Navigation" navskip="index next" only %}{% endblock nav %}
+{% block nav %}{% include "noname/nav.html" with title="Navigation" navskip="next" only %}{% endblock nav %}
