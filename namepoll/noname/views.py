@@ -32,17 +32,36 @@ def _voter(request):
     return voter
 
 
-def _next(voter):
+def _first_in_iterable(collection):
+    return collection.__iter__.next()
+
+def _otherthan(voter, lastseen, voted=False):
     allcomp = CompanyName.objects.all()
-    remaining = frozenset(allcomp) - frozenset(voter.pages_seen.all())
+
+    remaining = frozenset(allcomp) \
+        - frozenset(voter.pages_seen.all()) \
+        - frozenset((lastseen,))
+
     if not remaining:
         remaining = frozenset(allcomp) - frozenset(voter.pages_voted.all())
         if not remaining:
-            return HttpResponseRedirect("/noname/thankyou/")
+            if voted:
+                #Congrats, you've been voting for all items
+                return HttpResponseRedirect("/noname/thankyou/")
 
-    #a relative path. We are 'appname/next'
-    new_company_name = choice(list(remaining)).name
-    newpath = reverse('detail', args=(new_company_name,))
+    remaining_nb = len(remaining)
+    if remaining_nb == 0:
+        base = frozenset(allcomp) - frozenset((lastseen,))
+        if not base:
+            new_company_name = _first_in_iterable(remaining)
+        else:
+            new_company_name = choice(tuple(base))
+    elif remaining_nb == 1:
+        new_company_name = _first_in_iterable(remaining)
+    else:
+        #a relative path. We are 'appname/next'
+        new_company_name = choice(tuple(remaining))
+    newpath = reverse('detail', args=(new_company_name.name,))
     return HttpResponseRedirect(newpath)
 
 
@@ -57,9 +76,13 @@ def thankyou(request):
     return _render(request, 'noname/thankyou.html', {'voter': voter})
 
 
-def next(request):
+def otherthan(request, name=''):
     voter = _voter(request)
-    return _next(voter)
+    try:
+        name = CompanyName.objects.get(name=name)
+    except CompanyName.DoesNotExist:
+        name = None
+    return _otherthan(voter, name)
 
 
 def _saveforms(request, forms):
@@ -118,7 +141,7 @@ def detail(request, pk):
         evalform.save_m2m()
         #BUG: save_m2m should have saved, but the eval is not in db unless this:
         evaluation.save()
-        return _next(voter)
+        return _otherthan(voter, companyname, voted=True)
 
     voterform.save()
 
