@@ -1,0 +1,51 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-03-10 17:08+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+
+#: admin/base_site.html:4
+msgid "Noname\\(R\\) site admin"
+msgstr ""
+
+#: admin/base_site.html:7
+msgid "We 're here to find a name"
+msgstr ""
+
+#: noname/nav.html:6
+msgid "You are here"
+msgstr ""
+
+#: noname/nav.html:6 noname/nav.html.py:7
+msgid "All proposed names"
+msgstr "Tous les noms proposés"
+
+#: noname/nav.html:7
+msgid "See all proposed names in line"
+msgstr "Voir une liste de tous les noms proposés"
+
+#: noname/nav.html:8
+msgid "See an other proposed name"
+msgstr ""
+
+#: noname/nav.html:8
+msgid "Show another name"
+msgstr ""
+
+#: noname/nav.html:9
+msgid "This is where admins go"
+msgstr ""
