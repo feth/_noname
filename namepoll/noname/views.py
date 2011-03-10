@@ -32,37 +32,39 @@ def _voter(request):
     return voter
 
 
-def _first_in_iterable(collection):
-    return collection.__iter__.next()
+def _remainingpages(voter, allcomp):
+    result = frozenset(allcomp) -frozenset(voter.pages_seen.all())
+    if result:
+        return result
+    return frozenset(allcomp) -frozenset(voter.pages_voted.all())
+
+
+def _redir2companyname(companyname):
+    newpath = reverse('detail', args=(companyname.name,))
+    return HttpResponseRedirect(newpath)
+
+
+def _choosenext(allcomp, lastseen):
+    choices = allcomp - frozenset((lastseen,))
+
+    if not choices:
+        return _redir2companyname(lastseen)
+
+    return _redir2companyname(choice(tuple(choices)))
+
 
 def _otherthan(voter, lastseen, voted=False):
-    allcomp = CompanyName.objects.all()
+    allcomp = frozenset(CompanyName.objects.all())
+    remaining = _remainingpages(voter, allcomp)
 
-    remaining = frozenset(allcomp) \
-        - frozenset(voter.pages_seen.all()) \
-        - frozenset((lastseen,))
+    if remaining:
+        return _choosenext(remaining, lastseen)
 
-    if not remaining:
-        remaining = frozenset(allcomp) - frozenset(voter.pages_voted.all())
-        if not remaining:
-            if voted:
-                #Congrats, you've been voting for all items
-                return HttpResponseRedirect("/noname/thankyou/")
+    if voted:
+        #Congrats, you've been voting for all items
+        return HttpResponseRedirect("/noname/thankyou/")
 
-    remaining_nb = len(remaining)
-    if remaining_nb == 0:
-        base = frozenset(allcomp) - frozenset((lastseen,))
-        if not base:
-            new_company_name = _first_in_iterable(remaining)
-        else:
-            new_company_name = choice(tuple(base))
-    elif remaining_nb == 1:
-        new_company_name = _first_in_iterable(remaining)
-    else:
-        #a relative path. We are 'appname/next'
-        new_company_name = choice(tuple(remaining))
-    newpath = reverse('detail', args=(new_company_name.name,))
-    return HttpResponseRedirect(newpath)
+    return _choosenext(allcomp, lastseen)
 
 
 def _render(request, templatename, variables):
