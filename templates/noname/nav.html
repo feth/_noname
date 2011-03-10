@@ -1,11 +1,12 @@
 {% extends "noname/foldable.html" %}
+{% load i18n %}
 
 {% block content %}
 <p>
-{% if "index" in navskip %}<span style="display:block; border: solid 1px;" title="You are here">All proposed names</span>
-{% else %}<span style="display:block;"><a href="{% url index %}" title="See all proposed names in line">All proposed names</a></span>{% endif %}
-{% if not "next" in navskip %}<span style="display:block;"><a href="{% url random-new %}" title="See an other proposed name">Show another name</a></span> {% endif %}
-<span style="display:block;"><a href="/admin" title="This is where admins go">admin</a></span>
-<span style="display:block;"><a href="{% url results %}" title="Results">results</a></span>
+{% if "index" in navskip %}<span style="display:block; border: solid 1px;" title="{% trans 'You are here' %}" >{% trans 'All proposed names' %}</span>
+{% else %}<span style="display:block;"><a href="{% url index %}" title="{% trans 'See all proposed names in line' %}">{% trans 'All proposed names' %}</a></span>{% endif %}
+{% if not "next" in navskip %}<span style="display:block;"><a href="{% url random-new %}" title="{% trans 'See an other proposed name' %}">{% trans 'Show another name' %}</a></span> {% endif %}
+<span style="display:block;"><a href="/admin" title="{% trans 'This is where admins go' %}">{% comment %}Translators: link to admin in navigation{% endcomment %}{% trans 'admin' %}</a></span>
+<span style="display:block;"><a href="{% url results %}" title="{% trans Results %}">{% trans results %}</a></span>
 </p>
 {% endblock %}
