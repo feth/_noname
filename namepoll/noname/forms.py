@@ -16,7 +16,7 @@ class EvaluationForm(ModelForm):
             }
 
     def custom_display(self):
-        if hasattr(self, "display_errors") and not self.display_errors:
+        if getattr(self, "display_errors", False):
             normal_row = u'<p%(html_class_attr)s><b>%(label)s</b> <br/> %(field)s%(help_text)s</p><br/>'
         else:
             normal_row = u'<p%(html_class_attr)s><b>%(label)s</b> <br/> %(field)s%(help_text)s<font color="ForestGreen">%(errors)s</font></p>'
