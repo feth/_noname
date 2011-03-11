@@ -10,13 +10,16 @@ $(document).ready(function(){
         $('input.star').rating();
     });
 
-    for (index=0;index<3;index++) {
-        $("div#id_value_" + index).click(function(){
-    	 $.post("/noname/eval/{{ companyname.name }}/", {value: index}, function(data){
+    // can do better, but \\S* wildcard seems not to work. why?
+    $("div").filter(function(){
+        return this.id.match("id_value_.*");
+        }).each(function(index, domEle){
+        $(domEle).click(function(){
+             $.post("/noname/eval/{{ companyname.name }}/", {value: this.id.substr(-1)}, function(data){
     	     $("#resulteval").html(data).css('display', 'inline').fadeOut(1000);
-    	 });
         });
-    }
+    });
+    });
 
     //JS enabled: ajax form
     $("input.form").hide();
