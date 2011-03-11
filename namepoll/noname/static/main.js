@@ -12,9 +12,6 @@ noname['trigger'] = {
         if (content.css('display') == 'none') {
             var isShown = false;
         }
-        if (content.css('display') == 'none') {
-            var isShown = false;
-        }
         content.slideToggle("slow");
         if (isShown) {
             $(this).text("[+] " + main_name);
