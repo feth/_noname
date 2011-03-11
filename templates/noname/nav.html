@@ -6,6 +6,7 @@
 {% if "index" in navskip %}<span style="display:block; border: solid 1px;" title="{% trans 'You are here' %}" >{% trans 'All proposed names' %}</span>
 {% else %}<span style="display:block;"><a href="{% url index %}" title="{% trans 'See all proposed names in line' %}">{% trans 'All proposed names' %}</a></span>{% endif %}
 {% if not "next" in navskip %}<span style="display:block;"><a href="{% if name %}{% url otherthan name %}{% else %}{% url random %}{% endif %}" title="{% trans 'See an other proposed name' %}">{% trans 'Show another name' %}</a></span> {% endif %}
+<span style="display:block;"><a href="/review" title="{% trans 'Review your votes' %}">{% trans 'review' %}</a></span>
 <span style="display:block;"><a href="/admin" title="{% trans 'This is where admins go' %}">{% comment %}Translators: link to admin in navigation{% endcomment %}{% trans 'admin' %}</a></span>
 <span style="display:block;"><a href="{% url results %}" title="{% trans Results %}">{% trans results %}</a></span>
 </p>
