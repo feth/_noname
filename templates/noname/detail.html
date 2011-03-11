@@ -4,14 +4,45 @@
 {% block jsfunctions %}
 <script type="text/javascript" src="{{ STATIC_URL }}jquery.rating.js"></script>
 <script type="text/javascript">
-    $(document).ready(function(){
-            $(function(){
-                $.fn.rating.options.starWidth = 64;
-                $('input.star').rating();
-                });
-            });
+$(document).ready(function(){
+    $(function(){
+        $.fn.rating.options.starWidth = 64;
+        $('input.star').rating();
+    });
 
-        </script>
+    for (index=0;index<3;index++) {
+        $("div#id_value_" + index).click(function(){
+    	 $.post("/noname/eval/{{ companyname.name }}/", {value: index}, function(data){
+    	     $("#resulteval").html(data).css('display', 'inline').fadeOut(1000);
+    	 });
+        });
+    }
+
+    //JS enabled: ajax form
+    $("input.form").hide();
+
+    //rating part
+    $("span#msgbutton").html("<input type=\"button\" id=\"messagebutton\" value=\"Record opinion\"/>")
+    $("input#messagebutton").click(function () {
+        $.post("/noname/message/{{ companyname.name }}/",  {message: $("textarea#id_message").value}, function(data){
+            $("#resultmsg").html(data).css('display', 'inline').fadeOut(1000);
+        });
+    });
+
+    //voter part
+    $("span#voterbutton").html("<input type=\"button\" id=\"savevoter\" value=\"Save\"/>")
+    $("input#savevoter").click(function () {
+        $.post("/noname/voterinfo/",  {
+		nickname: $("id_optional_nickname").value,
+		email: $("id_optional_email").value,
+		info: $("id_optional_info").value
+		}, function(data){
+            $("#resultvoter").html(data).css('display', 'inline').fadeOut(1000);
+        });
+    });
+
+});
+</script>
 {% endblock %}
 {% block css %}
 <style>
@@ -35,6 +66,7 @@
 
 {% block body %}
 {% load i18n %}
+<input id="id_value_5" type="submit" value="hello"/>
 <div id="main">
     <div class="content" >
         <h1 id="companyname">{{ companyname.name }}</h1>
@@ -46,23 +78,36 @@
     </div>
     <hr/>
     <div class="forms">
-        <form action="{% url detail companyname %}" method="POST">
+        <form id="commonform" action="{% url detail companyname %}" method="POST">
             {% csrf_token %}
             <fieldset>
                 <legend>Your advice</legend>
                 <div id="evalform">
+		    <div id="ratingstars">
+			{{ evalform.value }}
+			<span id="resulteval"></span>
+		    </div> <!--ratingstars-->
+		    <div id="ratingmessage">
+			{{ evalform.message }}
+			<span id="msgbutton"></span>
+			<span id="resultmsg"></span>
+		    </div> <!--ratingmessage-->
+		    {% comment %}
                     {{ evalform.custom_display }}
+		    {% endcomment %}
                 </div><!--evalform-->
             </fieldset>
             <fieldset>
                 <legend>Who are you ?</legend>
                 <div id="voterform">
                     {{ voterform.custom_display }}
+		    <span id="voterbutton"></span>
+		    <span id="resultvoter"></span>
                 </div><!--voterform-->
             </fieldset>
                 <div class="buttons">
-                    <input type="submit" value="Submit"/>
-                    <input type="button" onclick="self.location.href='.'" value="Cancel">
+                    <input type="submit" class="form" value="Submit"/>
+                    <input type="button" class="form" onclick="self.location.href='.'" value="Cancel">
                 </div>
             </form>
     </div> <!--forms-->
