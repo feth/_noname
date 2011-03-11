@@ -120,6 +120,7 @@ def eval(request, pk):
     evaluation = voter.get_evaluation(companyname)
     evaluation.value = request.POST['value']
     evaluation.save()
+    voter.save()
     return _render(request, 'noname/valideval.html', {})
 
 
@@ -131,6 +132,7 @@ def message(request, pk):
     evaluation = voter.get_evaluation(companyname)
     evaluation.message = request.POST['message']
     evaluation.save()
+    voter.save()
     return _render(request, 'noname/valideval.html', {})
 
 
@@ -138,6 +140,10 @@ def voterinfo(request):
     voter = _voter(request)
     print "voterinfo XXX TODO: parse request.POST"
     print request.POST
+    voter.optional_nickname = request.POST['nickname']
+    voter.optional_email = request.POST['email']
+    voter.optional_info = request.POST['info']
+    voter.save()
     return _render(request, 'noname/valideval.html', {})
 
 
