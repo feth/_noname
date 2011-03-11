@@ -15,19 +15,6 @@ class EvaluationForm(ModelForm):
             'value': RadioSelect(attrs={'class':'star'})
             }
 
-    def custom_display(self):
-        if getattr(self, "display_errors", False):
-            normal_row = u'<p%(html_class_attr)s><b>%(label)s</b> <br/> %(field)s%(help_text)s</p><br/>'
-        else:
-            normal_row = u'<p%(html_class_attr)s><b>%(label)s</b> <br/> %(field)s%(help_text)s<font color="ForestGreen">%(errors)s</font></p>'
-
-        return self._html_output(
-            normal_row = normal_row,
-            error_row = u'',
-            row_ender = '</p><br/>',
-            help_text_html = u' <span class="helptext">%s</span>',
-            errors_on_separate_row = False)
-
 
 class VoterForm(ModelForm):
     class Meta(object):
