@@ -33,6 +33,9 @@ def _voter(request):
 
 
 def _remainingpages(voter, allcomp):
+    """
+    Pages not seen or not voted yet
+    """
     result = frozenset(allcomp) -frozenset(voter.pages_seen.all())
     if result:
         return result
@@ -106,6 +109,38 @@ def _saveforms(request, forms):
         else:
             yield True
 
+
+def eval(request, pk):
+    #FIXME: XXX XXX XXX
+    #check value: must be int. Seems django will fix it otherwise.
+    #FIXME: XXX XXX XXX
+    #XSS
+    voter = _voter(request)
+    companyname = get_object_or_404(CompanyName, pk=pk)
+    evaluation = voter.get_evaluation(companyname)
+    evaluation.value = request.POST['value']
+    evaluation.save()
+    return _render(request, 'noname/valideval.html', {})
+
+
+def message(request, pk):
+    #FIXME: XXX XXX XXX
+    #XSS
+    voter = _voter(request)
+    companyname = get_object_or_404(CompanyName, pk=pk)
+    evaluation = voter.get_evaluation(companyname)
+    evaluation.message = request.POST['message']
+    evaluation.save()
+    return _render(request, 'noname/valideval.html', {})
+
+
+def voterinfo(request):
+    voter = _voter(request)
+    print "voterinfo XXX TODO: parse request.POST"
+    print request.POST
+    return _render(request, 'noname/valideval.html', {})
+
+
 def detail(request, pk):
     voter = _voter(request)
     companyname = get_object_or_404(CompanyName, pk=pk)
@@ -130,8 +165,6 @@ def detail(request, pk):
             evaluation.value = -1
 
         #manually tweak evaluation
-        evaluation.author = voter
-        evaluation.subject = companyname
         evaluation.date_of_modification = date.today()
 
         #manually tweak voter
