@@ -59,7 +59,7 @@ class CompanyName(models.Model):
         mean = total / evaluations_nb
 
         #50 because it is 100/2
-        #2 is greater value: for 'great'
+        #2 is the greatest value: for 'great'
         return mean, 50*mean, evaluations_nb
 
 
@@ -93,6 +93,9 @@ class Voter(models.Model):
             return evaluations_tuple[0]
         evaluation = Evaluation()
         evaluation.date_of_creation = date.today()
+        evaluation.date_of_modification = date.today()
+        evaluation.author = self
+        evaluation.subject = companyname
         return evaluation
 
 
@@ -119,5 +122,4 @@ class Evaluation(models.Model):
     class Meta(object):
         verbose_name = _('evaluation')
         verbose_name_plural = _('evaluations')
-
 
