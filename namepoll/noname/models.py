@@ -111,8 +111,8 @@ class Evaluation(models.Model):
     value = models.IntegerField(
         _("What do you think this name would be to our company?"),
         choices=VALUES,
-        default=-1,
-        blank=True)
+        default=0,
+        blank=False)
     message = models.TextField(max_length=300, blank=True)
     author = models.ForeignKey(Voter, related_name="evaluations")
     subject = models.ForeignKey(CompanyName, related_name="evaluations")
