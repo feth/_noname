@@ -27,7 +27,7 @@ $(document).ready(function(){
     //rating part
     $("span#msgbutton").html("<input type=\"button\" id=\"messagebutton\" value=\"Record opinion\"/>")
     $("input#messagebutton").click(function () {
-        $.post("/noname/message/{{ companyname.name }}/",  {message: $("textarea#id_message").value}, function(data){
+        $.post("/noname/message/{{ companyname.name }}/",  {message: $("textarea#id_message").val()}, function(data){
             $("#resultmsg").html(data).css('display', 'inline').fadeOut(1000);
         });
     });
@@ -69,7 +69,6 @@ $(document).ready(function(){
 
 {% block body %}
 {% load i18n %}
-<input id="id_value_5" type="submit" value="hello"/>
 <div id="main">
     <div class="content" >
         <h1 id="companyname">{{ companyname.name }}</h1>
