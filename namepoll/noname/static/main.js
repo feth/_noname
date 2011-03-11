@@ -4,7 +4,7 @@
  */
 noname = new Object();
 noname['trigger'] = {
-    click : function () {
+    click: function () {
         var isShown = true;
         var main_name = $(this).attr('id').substr(5 );
         var inner_name = main_name + '_inner';
