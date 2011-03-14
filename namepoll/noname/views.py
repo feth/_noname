@@ -18,7 +18,9 @@ def _voter(request):
     does a bunch of things with the request to have a decent voter.
     """
     if "voter" in request.session:
-        return request.session["voter"], False
+        request_voter = request.session["voter"]
+        voter = Voter.objects.get(id=request_voter.id)
+        return voter, False
 
     #### Once per session
 
