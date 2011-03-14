@@ -42,7 +42,7 @@ def logout(request):
     """
     if 'voter' in request.session:
         del request.session['voter']
-    return HttpResponseRedirect(reverse('index'))
+    return _render(request, "noname/logout.html", {})
 
 
 def usevoter(view):
