@@ -10,7 +10,7 @@
         <span><a href="{% url detail name %}">{{ name }}</a></span>
 {% endfor %}</li>
 <li>Pages voted:
-{% for name in voter.pages_voted.all %}
+{% for name in voter.companies_voted %}
         <span><a href="{% url detail name %}">{{ name }}</a></span>
 {% endfor %}</li>
 </ul>
