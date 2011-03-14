@@ -20,7 +20,7 @@
 </head>
 <body>
 {%block body %}{% endblock %}
-{% include "noname/sys.html" with title="Context" voter=voter only %}
+{% block sys %}{% include "noname/sys.html" with title="Context" voter=voter only %}{% endblock sys %}
 {% block nav %}{% include "noname/nav.html" with title="Navigation" only %}{% endblock nav %}
 {% block voter_info %}{% include "noname/voter_info.html" with title="About you" only %}{% endblock voter_info %}
 </body>
