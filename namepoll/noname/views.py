@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext, loader
 
 from noname.forms import EvaluationForm, VoterForm
-from noname.models import CompanyName, Voter
+from noname.models import CompanyName, Voter, Evaluation
 
 SESSIONS_EXPIRY = datetime(2011, 12, 31, 23, 59, 59, 999)
 
@@ -256,6 +256,27 @@ def results(request):
         'results': results
     }
     return _render(request, 'noname/results.html', variables)
+
+def review(request):
+    reviews = []
+    for company in CompanyName.objects.all():
+        companyname = company.name
+        try:
+            evaluation = Evaluation.objects.get(subject=companyname)
+            value = evaluation.value
+            message = evaluation.message
+        except Evaluation.DoesNotExist, e:
+            value = ""
+            message = ""
+        reviews.append((
+            companyname,
+            value,
+            message
+        ))
+    variables = {
+        'reviews': reviews
+    }
+    return _render(request, 'noname/review.html', variables)
 
 
 @usevoter
