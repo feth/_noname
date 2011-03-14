@@ -1,12 +1,12 @@
 {% comment %}
 Use hide="anything" to hide this block by default
 {% endcomment %}
-<div class="contentbox" id="{{ title }}">
-    <p class="trigger" id="show_{{ title }}" _content="{{ title }}_inner">
+<div class="contentbox" id="{{ title|slugify }}">
+    <p class="trigger" id="show_{{ title|slugify }}" _content="{{ title|slugify }}_inner">
 [{% if hide %}+{% else %}-{% endif %}] {{ title }}
 </p>
-<div class="foldable" id="{{ title }}_inner"{% if hide %} style="display:none;"{% endif %}>
+<div class="foldable" id="{{ title|slugify }}_inner"{% if hide %} style="display:none;"{% endif %}>
 	{% block content %}{% endblock %}
-</div><!-- end #{{ title }}_inner -->
-</div><!-- end #{{ title }} -->
+</div><!-- end #{{ title|slugify }}_inner -->
+</div><!-- end #{{ title|slugify }} -->
 
