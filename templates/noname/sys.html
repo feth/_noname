@@ -5,8 +5,12 @@
 <ul>
 <li>Server time: {% now "jS F Y H:i" %}</li>
 <li>Visitor id: {{ voter.id }}</li>
-<li>Visited pages:
+<li>Pages visited:
 {% for name in voter.pages_seen.all %}
+        <span><a href="{% url detail name %}">{{ name }}</a></span>
+{% endfor %}</li>
+<li>Pages voted:
+{% for name in voter.pages_voted.all %}
         <span><a href="{% url detail name %}">{{ name }}</a></span>
 {% endfor %}</li>
 </ul>
