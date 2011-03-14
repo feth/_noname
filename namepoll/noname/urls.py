@@ -12,4 +12,7 @@ urlpatterns = patterns('noname.views',
     url(r'^random/$', 'otherthan', name='random'),
     url(r'^results/$', 'results', name='results'),
     url(r'^thankyou/$', 'thankyou', name='thankyou'),
-)
+    url(r'^logout/$', 'logout', name='logout'),
+) + patterns('django.views.generic.simple',
+    (r'^welcome/$', 'direct_to_template', {'template': 'welcome.html'}),
+    )
