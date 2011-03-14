@@ -4,7 +4,7 @@ from random import choice
 
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render_to_response
+from django.shortcuts import get_object_or_404
 from django.template import RequestContext, loader
 
 from noname.forms import EvaluationForm, VoterForm
@@ -48,14 +48,14 @@ def logout(request):
 def usevoter(view):
     """
     Decorator for view that use a 'voter' as their first argument
-    If no voter existed before, it calls 'welcome'
+    If no voter existed before, it calls 'index'
     """
     @wraps(view)
     def replacement(request, *args, **kwargs):
         voter, created = _voter(request)
         if not created:
             return view(voter, request, *args, **kwargs)
-        return HttpResponseRedirect(reverse('welcome'))
+        return HttpResponseRedirect(reverse('index'))
 
     return replacement
 
@@ -279,13 +279,13 @@ def review(request):
     return _render(request, 'noname/review.html', variables)
 
 
-@usevoter
-def index(voter, request):
+def index(request):
+    voter, created = _voter(request)
+    print "created?", created
     variables = {
         'voter': voter,
         'all_proposed_names': CompanyName.objects.all(),
+        'welcome': created,
         }
     return _render(request, 'noname/index.html', variables)
 
-def welcome(request):
-    return render_to_response('noname/welcome.html')
