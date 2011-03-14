@@ -5,10 +5,10 @@
 <script type="text/javascript" src="{{ STATIC_URL }}jquery.rating.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    $(function(){
-        $.fn.rating.options.starWidth = 64;
-        $('input.star').rating();
-    });
+
+
+    $.fn.rating.options.starWidth = 64;
+    $('input.star').rating();
 
     // can do better, but \\S* wildcard seems not to work. why?
     $("div").filter(function(){
