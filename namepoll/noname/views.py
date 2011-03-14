@@ -32,48 +32,59 @@ def _voter(request):
     return voter
 
 
-def _remainingpages(voter, allcomp):
-    """
-    Pages not seen or not voted yet
-    """
-    result = frozenset(allcomp) -frozenset(voter.pages_seen.all())
-    if result:
-        return result
-    return frozenset(allcomp) -frozenset(voter.pages_voted.all())
-
-
-def _redir2companyname(companyname):
-    newpath = reverse('detail', args=(companyname.name,))
-    return HttpResponseRedirect(newpath)
-
-
-def _choosenext(allcomp, lastseen):
-    choices = allcomp - frozenset((lastseen,))
-
-    if not choices:
-        return _redir2companyname(lastseen)
-
-    return _redir2companyname(choice(tuple(choices)))
-
-
-def _otherthan(voter, lastseen, voted=False):
-    allcomp = frozenset(CompanyName.objects.all())
-    remaining = _remainingpages(voter, allcomp)
-
-    if remaining:
-        return _choosenext(remaining, lastseen)
-
-    if voted:
-        #Congrats, you've been voting for all items
-        return HttpResponseRedirect("/noname/thankyou/")
-
-    return _choosenext(allcomp, lastseen)
-
-
 def _render(request, templatename, variables):
     context = RequestContext(request, variables)
     template = loader.get_template(templatename)
     return HttpResponse(template.render(context))
+
+
+class OtherThan(object):
+
+    def __init__(self, voter, allcomp=None):
+
+        self.voter = voter
+
+        if allcomp is None:
+            allcomp = CompanyName.objects.all()
+        self.allcomp = frozenset(allcomp)
+
+    def _remainingpages(self):
+        """
+        Pages not seen or not voted yet
+        """
+        result = self.allcomp -frozenset(self.voter.pages_seen.all())
+        if result:
+            return result
+        return self.allcomp -frozenset(self.voter.pages_voted.all())
+
+
+    def _redir2companyname(self, companyname):
+        newpath = reverse('detail', args=(companyname.name,))
+        return HttpResponseRedirect(newpath)
+
+
+    def _choosenext(self, lastseen, remaining=None):
+        if remaining is None:
+            remaining = self.allcomp
+        choices = remaining - frozenset((lastseen,))
+
+        if not choices:
+            return self._redir2companyname(lastseen)
+
+        return self._redir2companyname(choice(tuple(choices)))
+
+
+    def next(self, lastseen, voted=False):
+        remaining = self._remainingpages()
+
+        if remaining:
+            return self._choosenext(lastseen, remaining=remaining)
+
+        if voted:
+            #Congrats, you've been voting for all items
+            return HttpResponseRedirect("/noname/thankyou/")
+
+        return self._choosenext(lastseen)
 
 
 def thankyou(request):
@@ -87,7 +98,8 @@ def otherthan(request, name=''):
         name = CompanyName.objects.get(name=name)
     except CompanyName.DoesNotExist:
         name = None
-    return _otherthan(voter, name)
+    other = OtherThan(voter)
+    return other.next(name)
 
 
 def _saveforms(request, forms):
@@ -182,7 +194,8 @@ def detail(request, pk):
         evalform.save_m2m()
         #BUG: save_m2m should have saved, but the eval is not in db unless this:
         evaluation.save()
-        return _otherthan(voter, companyname, voted=True)
+        other = OtherThan(voter)
+        return other.next(companyname, voted=True)
 
     voterform.save()
 
