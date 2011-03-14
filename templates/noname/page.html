@@ -7,9 +7,28 @@
 <script type="text/javascript" src="{{ STATIC_URL }}jquery.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}main.js"></script>
 <script type="text/javascript">
+<!--
     $(document).ready(function(){
         $('.trigger').click(noname['trigger']['click']);
+	{% block voter_inf_js %}
+        $("div#voterform").load("{% url voterform %}", function(){
+	    $("div#voterform").css('display', 'none').fadeIn(1000);
+	    $("input#savevoter").click(function(){
+            var data = {
+                     optional_nickname: $("input#id_optional_nickname").val(),
+                     optional_email: $("input#id_optional_email").val(),
+                     optional_info: $("textarea#id_optional_info").val(),
+		     }
+                $.post("/noname/voterinfo/",  data, function(result) {
+                    $("#resultvoter").html(result).css('display', 'inline').fadeOut(1000);
+		});
+
+	    });
+
+	});
+	{% endblock voter_inf_js %}
     });
+    -->
 </script>
 {% block jsfunctions %}{% endblock %}
 

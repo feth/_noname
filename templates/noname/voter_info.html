@@ -1,6 +1,15 @@
 {% extends "noname/foldable.html" %}
 
 {% block content %}
-here, the info supplied by voter and a button to switch this to edit tab
-(if no js: only the form)
+<div id="voterinfo">
+<form id="voter">
+    <fieldset>
+        <legend>Who are you ?</legend>
+        <div id="voterform">
+        </div><!--voterform-->
+        <input type="button" id="savevoter" value="Record my details"/>
+        <span id="resultvoter"></span>
+    </fieldset>
+</form>
+</div>
 {% endblock %}
