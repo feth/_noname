@@ -97,7 +97,7 @@ class Voter(models.Model):
 
 
     def _companies_voted(self):
-        return (evaluation.subject for evaluation in self.evaluations.all())
+        return tuple(evaluation.subject for evaluation in self.evaluations.all())
 
     companies_voted = property(fget=_companies_voted)
 
