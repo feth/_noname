@@ -250,7 +250,8 @@
 			else
 			 $(control.inputs).removeAttr('checked');
 			// Show/hide 'cancel' button
-			control.cancel[control.readOnly || control.required?'hide':'show']();
+            // XXX Ugly tweak to hide the control button.
+			control.cancel[control.readOnly || control.required?'hide':'hide']();
 			// Add/remove read-only classes to remove hand pointer
 			this.siblings()[control.readOnly?'addClass':'removeClass']('star-rating-readonly');
 		},// $.fn.rating.draw
