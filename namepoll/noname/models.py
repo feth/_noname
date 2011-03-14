@@ -107,9 +107,9 @@ class Evaluation(models.Model):
         Evaluation's model
     """
     VALUES = (
-        (0, _('Prejudiciable')),
-        (1, _('Valid')),
-        (2, _('Great')),
+        (1, _('Prejudiciable')),
+        (2, _('Valid')),
+        (3, _('Great')),
     )
     value = models.IntegerField(
         _("What do you think this name would be to our company?"),
