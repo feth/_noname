@@ -104,3 +104,14 @@ table.result{
 .votenook{
     background-color:#c0c0c0;
 }
+a#nextitem
+{
+margin: 5px;
+padding: 5px;
+border: solid green 2px;
+background-color:#ddd;
+}
+a#nextitem:hover
+{
+background-color:#fff;
+}

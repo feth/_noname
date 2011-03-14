@@ -1,38 +1,42 @@
 {% extends "noname/page.html" %}
+{% load i18n %}
 
 {% block title %}“{{ companyname.name}}”: what do you think?{% endblock %}
 {% block jsfunctions %}
 <script type="text/javascript" src="{{ STATIC_URL }}jquery.rating.js"></script>
 <script type="text/javascript">
+
+function loaditem() {
+	$("div#item").load("{% url item companyname %}", function(data){
+		$("div#item").css('display', 'none').fadeIn(300);
+		$.fn.rating.options.starWidth = 64;
+		$('input.star').rating();
+
+		// bind stars to sending rating
+		// can do better, but \\S* wildcard seems not to work. why?
+		$("div").filter(function(){
+			return this.id.match("id_value_.*");
+			}).each(function(index, domEle){
+				$(domEle).click(function(){
+					$.post("/noname/eval/{{ companyname.name }}/", {value: this.id.substr(-1)}, function(data){
+						$("#resulteval").html(data).css('display', 'inline').fadeOut(1000);
+						});
+					});
+				});
+
+		//send message
+		$("span#msgbutton").html("<input type=\"button\" id=\"messagebutton\" value=\"Record opinion\"/>")
+		$("input#messagebutton").click(function () {
+			$.post("/noname/message/{{ companyname.name }}/",  {message: $("textarea#id_message").val()}, function(data){
+				$("#resultmsg").html(data).css('display', 'inline').fadeOut(1000);
+				});
+			});
+
+
+	});
+};
 $(document).ready(function(){
-
-
-    $.fn.rating.options.starWidth = 64;
-    $('input.star').rating();
-
-    // can do better, but \\S* wildcard seems not to work. why?
-    $("div").filter(function(){
-        return this.id.match("id_value_.*");
-        }).each(function(index, domEle){
-        $(domEle).click(function(){
-             $.post("/noname/eval/{{ companyname.name }}/", {value: this.id.substr(-1)}, function(data){
-    	     $("#resulteval").html(data).css('display', 'inline').fadeOut(1000);
-        });
-    });
-    });
-
-    //JS enabled: ajax form
-    $("input.form").hide();
-
-    //rating part
-    $("span#msgbutton").html("<input type=\"button\" id=\"messagebutton\" value=\"Record opinion\"/>")
-    $("input#messagebutton").click(function () {
-        $.post("/noname/message/{{ companyname.name }}/",  {message: $("textarea#id_message").val()}, function(data){
-            $("#resultmsg").html(data).css('display', 'inline').fadeOut(1000);
-        });
-    });
-
-
+	loaditem();
 });
 </script>
 {% endblock %}
@@ -57,8 +61,11 @@ $(document).ready(function(){
 {% endblock css %}
 
 {% block body %}
-<div class="main", id="item">
-{% include "noname/item.html" %}
+<div class="main">
+<div class="item" id="item">
+{% comment %}{% include "noname/item.html" %}{% endcomment %}
+</div> <!-- end item -->
+<a href="{% url otherthan companyname %}" id="nextitem">{% trans "Next name" %}</a>
 </div> <!-- end main -->
 {% endblock body %}
 {% block nav %}{% include "noname/nav.html" with title="Navigation" name=companyname.name only %}{% endblock nav %}

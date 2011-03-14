@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 from django.template import RequestContext, loader
 
 from noname.forms import EvaluationForm, VoterForm
-from noname.models import CompanyName, Voter, Evaluation
+from noname.models import CompanyName, Voter
 
 SESSIONS_EXPIRY = datetime(2011, 12, 31, 23, 59, 59, 999)
 
@@ -161,7 +161,6 @@ def eval(voter, request, pk):
     evaluation.value = int(request.POST['value']) + 1
     evaluation.date_of_modification = date.today()
     evaluation.save()
-    print voter.evaluations.all()
     return _render(request, 'noname/valideval.html', {})
 
 
@@ -172,7 +171,7 @@ def message(voter, request, pk):
     companyname = get_object_or_404(CompanyName, pk=pk)
     evaluation = voter.get_evaluation(companyname)
     evaluation.message = request.POST['message']
-    evaluation.date_of_modification = date.now()
+    evaluation.date_of_modification = date.today()
     evaluation.save()
     return _render(request, 'noname/valideval.html', {})
 
@@ -191,6 +190,18 @@ def voterinfo(voter, request):
 def detail(voter, request, pk):
     companyname = get_object_or_404(CompanyName, pk=pk)
     voter.pages_seen.add(companyname)
+
+    variables = {
+        'companyname': companyname,
+        'voter': voter,
+    }
+    return _render(request, 'noname/detail.html', variables)
+
+
+@usevoter
+def item(voter, request, pk):
+    companyname = get_object_or_404(CompanyName, pk=pk)
+    voter.pages_seen.add(companyname)
     evaluation = voter.get_evaluation(companyname)
 
     if not request.POST:
@@ -206,7 +217,7 @@ def detail(voter, request, pk):
         'voter': voter,
         'evalform': evalform,
     }
-    return _render(request, 'noname/detail.html', variables)
+    return _render(request, 'noname/item.html', variables)
 
 
 def results(request):
