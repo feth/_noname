@@ -257,31 +257,19 @@ def results(request):
     }
     return _render(request, 'noname/results.html', variables)
 
-def review(request):
-    reviews = []
-    for company in CompanyName.objects.all():
-        companyname = company.name
-        try:
-            evaluation = Evaluation.objects.get(subject=companyname)
-            value = evaluation.value
-            message = evaluation.message
-        except Evaluation.DoesNotExist, e:
-            value = ""
-            message = ""
-        reviews.append((
-            companyname,
-            value,
-            message
-        ))
-    variables = {
-        'reviews': reviews
-    }
-    return _render(request, 'noname/review.html', variables)
+
+@usevoter
+def review(voter, request):
+    reviews = tuple(
+        (evaluation.subject.name, evaluation.value, evaluation.message)
+        for evaluation in voter.evaluations.all()
+        )
+
+    return _render(request, 'noname/review.html', {'reviews': reviews})
 
 
 def index(request):
     voter, created = _voter(request)
-    print "created?", created
     variables = {
         'voter': voter,
         'all_proposed_names': CompanyName.objects.all(),
