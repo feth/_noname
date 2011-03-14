@@ -18,20 +18,22 @@ hr
 }
 div.contentbox
 {
-    text-align:center;
     float: left;
     width:30%;
 }
-div.foldable,p.trigger
+div.foldable
 {
     margin:0px;
+}
+div.foldable,p.trigger
+{
     padding:5px;
-    text-align:center;
     /*background:#e5eecc;*/
     border:solid 1px #80a558;
 }
 p.trigger{
     background-color:#c1e746;
+    margin:10px 0px 0px 0px;
 }
 div.foldable{
 /*    background-color:#80a558;*/
