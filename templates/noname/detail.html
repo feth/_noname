@@ -36,10 +36,10 @@ $(document).ready(function(){
     $("span#voterbutton").html("<input type=\"button\" id=\"savevoter\" value=\"Save\"/>")
     $("input#savevoter").click(function () {
         $.post("/noname/voterinfo/",  {
-		nickname: $("id_optional_nickname").value,
-		email: $("id_optional_email").value,
-		info: $("id_optional_info").value
-		}, function(data){
+            nickname: $("input#id_optional_nickname").val(),
+            email: $("input#id_optional_email").val(),
+            info: $("textarea#id_optional_info").val()
+            }, function(data){
             $("#resultvoter").html(data).css('display', 'inline').fadeOut(1000);
         });
     });
