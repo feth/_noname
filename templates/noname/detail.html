@@ -57,44 +57,8 @@ $(document).ready(function(){
 {% endblock css %}
 
 {% block body %}
-{% load i18n %}
-<div id="main">
-    <div class="content" >
-        <h1 id="companyname">{{ companyname.name }}</h1>
-        {% include "noname/availability.html" with title="Availability" companyname=companyname only %}
-        {% include "noname/explanation.html" with title="Explanation" hide="yes" companyname=companyname only %}
-        {% include "noname/illustration.html" with title="Illustration" hide="yes" companyname=companyname only %}
-        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-        <hr/>
-    </div>
-    <hr/>
-    <div class="forms">
-        <form id="commonform" action="{% url detail companyname %}" method="POST">
-            {% csrf_token %}
-            <fieldset>
-                <legend>Your advice</legend>
-                <div id="evalform">
-		    <div id="ratingstars">
-			{{ evalform.value }}
-			<span id="resulteval"></span>
-		    </div> <!--ratingstars-->
-		    <div id="ratingmessage">
-			{{ evalform.message }}
-			<span id="msgbutton"></span>
-			<span id="resultmsg"></span>
-		    </div> <!--ratingmessage-->
-		    {% comment %}
-                    {{ evalform.custom_display }}
-		    {% endcomment %}
-                </div><!--evalform-->
-            </fieldset>
-
-                <div class="buttons">
-                    <input type="submit" class="form" value="Submit"/>
-                    <input type="button" class="form" onclick="self.location.href='.'" value="Cancel">
-                </div>
-            </form>
-    </div> <!--forms-->
-</div>
+<div class="main", id="item">
+{% include "noname/item.html" %}
+</div> <!-- end main -->
 {% endblock body %}
 {% block nav %}{% include "noname/nav.html" with title="Navigation" name=companyname.name only %}{% endblock nav %}

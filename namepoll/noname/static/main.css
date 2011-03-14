@@ -6,7 +6,7 @@ div.content,div.forms
     padding: 0.5em;
     text-align:left;
 }
-div#main
+div.main
 {
     width: 70%;
     float: left;
