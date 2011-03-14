@@ -19,7 +19,7 @@
                      optional_email: $("input#id_optional_email").val(),
                      optional_info: $("textarea#id_optional_info").val(),
 		     }
-                $.post("/noname/voterinfo/",  data, function(result) {
+                $.post("{% url voterinfo %}",  data, function(result) {
                     $("#resultvoter").html(result).css('display', 'inline').fadeOut(1000);
 		});
 
