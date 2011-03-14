@@ -53,8 +53,8 @@ $(document).ready(function(){
     Keeping this css here because /for now/, STATIC_URL can change.
     {% endcomment %}
     /* jQuery.Rating Plugin CSS - http://www.fyneworks.com/jquery/star-rating/ */
-    div.rating-cancel,div.star-rating{float:left;width:65px;height:63px;text-indent:-999em;cursor:pointer;display:block;background:transparent;overflow:hidden}
-    div.rating-cancel,div.rating-cancel a{background:url({{ STATIC_URL }}delete.gif) no-repeat 0 -64px}
+    div.star-rating{float:left;width:65px;height:63px;text-indent:-999em;cursor:pointer;display:block;background:transparent;overflow:hidden;}
+    div.rating-cancel a{background:url({{ STATIC_URL }}delete.gif) no-repeat 0 -64px;}
     div.star-rating,div.star-rating a{background:url({{ STATIC_URL }}star.gif) no-repeat 0 0px}
     div.rating-cancel a,div.star-rating a{display:block;width:64px;height:100%;background-position:0 0px;border:0}
     div.star-rating-on a{background-position:0 -64px!important}
