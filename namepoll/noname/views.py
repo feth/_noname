@@ -289,3 +289,13 @@ def index(request):
         }
     return _render(request, 'noname/index.html', variables)
 
+
+@usevoter
+def voterform(voter, request):
+    if not request.POST:
+        # If this isn't a POST request, we don't use it to fill the form
+        voterform = VoterForm(instance=voter)
+    else:
+        voterform = VoterForm(request.POST, instance=voter)
+    return _render(request, 'noname/voterform.html', {'voterform': voterform})
+

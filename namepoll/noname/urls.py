@@ -14,4 +14,5 @@ urlpatterns = patterns('noname.views',
     url(r'^review/$', 'review', name='review'),
     url(r'^thankyou/$', 'thankyou', name='thankyou'),
     url(r'^logout/$', 'logout', name='logout'),
+    url(r'^voterform/$', 'voterform', name='voterform'),
 )
