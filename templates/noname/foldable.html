@@ -2,12 +2,13 @@
 Use hide="anything" to hide this block by default
 TODO: slugify everything several times does not sound optimal
 {% endcomment %}
-<div class="contentbox" id="{{ title|slugify }}">
-    <p class="trigger" id="show_{{ title|slugify }}" _content="{{ title|slugify }}_inner">
+{% with slug=title|slugify %}
+<div class="contentbox" id="{{ slug }}">
+    <p class="trigger" id="show_{{ slug }}" _content="{{ slug }}_inner">
 [{% if hide %}+{% else %}-{% endif %}] {{ title }}
 </p>
-<div class="foldable" id="{{ title|slugify }}_inner"{% if hide %} style="display:none;"{% endif %}>
+<div class="foldable" id="{{ slug }}_inner"{% if hide %} style="display:none;"{% endif %}>
 	{% block content %}{% endblock %}
-</div><!-- end #{{ title|slugify }}_inner -->
-</div><!-- end #{{ title|slugify }} -->
-
+</div><!-- end #{{ slug }}_inner -->
+</div><!-- end #{{ slug }} -->
+{% endwith %}
