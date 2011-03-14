@@ -222,7 +222,8 @@ def detail(voter, request, pk):
         other = OtherThan(voter)
         return other.next(companyname, voted=True)
 
-    voterform.save()
+    if voter_data:
+        voterform.save()
 
     if request.POST:
         # Here, the user posted some data but the evalform wasn't valid (see
