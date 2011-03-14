@@ -1,7 +1,51 @@
 {% extends "noname/page.html" %}
 
 {% block jsfunctions %}
+{% if welcome %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#continue").click(function(){
+            $(".overlay").fadeOut(1000);
+	});
+    });
+</script>
+{% endif %}
 {% endblock %}
+
+{% block css %}
+{% if welcome %}
+<style type="text/css">
+.overlay
+{
+position: absolute;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+}
+#over1
+{
+opacity: 0.5;
+filter: alpha(opacity=50);
+background-color: #000;
+z-index: 10;
+}
+#over2
+{
+z-index: 15;
+}
+#welcomeborder
+{
+background-color: #fff;
+width: 30%;
+height: 60%;
+margin: 0 auto;
+z-index: 20;
+}
+</style>
+{% endif %}
+{% endblock %}
+
 
 {% block title %}Noname inc.{% endblock %}
 
@@ -19,5 +63,21 @@
     <p>No proposed company names are available.</p>
 {% endif %}
 </div>
+{% if welcome %}
+<div class="overlay" id="over1">
+</div>
+<div class="overlay" id="over2">
+<div id="welcomeborder">
+<h1>Welcome</h1>
+<pre>...and thank you for coming
+Help us define our identity towards the outer world
+And keep it to yourself.
+
+We'll keep your details safe.
+</pre>
+<input type="button" value="Go on to the site" id="continue"/>
+</div>
+</div>
+{% endif %}
 {% endblock body%}
 {% block nav %}{% include "noname/nav.html" with title="Navigation" navskip="index next" only %}{% endblock nav %}
