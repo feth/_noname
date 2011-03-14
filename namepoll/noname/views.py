@@ -78,10 +78,10 @@ class OtherThan(object):
         """
         Pages not seen or not voted yet
         """
-        result = self.allcomp -frozenset(self.voter.pages_seen.all())
+        result = self.allcomp - frozenset(self.voter.pages_seen.all())
         if result:
             return result
-        return self.allcomp -frozenset(self.voter.pages_voted.all())
+        return self.allcomp - frozenset(self.voter.companies_voted)
 
 
     def _redir2companyname(self, companyname):
@@ -214,10 +214,6 @@ def detail(voter, request, pk):
 
         #manually tweak evaluation
         evaluation.date_of_modification = date.today()
-
-        #manually tweak voter
-        voter.pages_voted.add(companyname)
-        #And now we commit to db
 
         #voting is done, let's go to next page
         voterform.save_m2m()

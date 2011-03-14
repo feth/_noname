@@ -72,9 +72,6 @@ class Voter(models.Model):
     optional_info = models.TextField(blank=True)
     pages_seen = models.ManyToManyField(CompanyName, related_name="seen",
                                         blank=True)
-    #redundant with evaluations but quite quicker
-    pages_voted = models.ManyToManyField(CompanyName, related_name="voted",
-                                         blank=True)
     weight = models.IntegerField(default=1)
 
     def __unicode__(self):
@@ -97,6 +94,12 @@ class Voter(models.Model):
         evaluation.author = self
         evaluation.subject = companyname
         return evaluation
+
+
+    def _companies_voted(self):
+        return (evaluation.subject for evaluation in self.evaluations.all())
+
+    companies_voted = property(fget=_companies_voted)
 
 
 class Evaluation(models.Model):
