@@ -5,14 +5,20 @@
 <ul>
 <li>Server time: {% now "jS F Y H:i" %}</li>
 <li>Visitor id: {{ voter.id }}</li>
+{% with seen=voter.pages_seen.all %}
+{% if seen %}
 <li>Pages visited:
 {% for name in voter.pages_seen.all %}
         <span><a href="{% url detail name %}">{{ name }}</a></span>
 {% endfor %}</li>
+{% endif %}
+{% endwith %}
+{% if voter.companies_voted %}
 <li>Pages voted:
 {% for name in voter.companies_voted %}
         <span><a href="{% url detail name %}">{{ name }}</a></span>
 {% endfor %}</li>
+{% endif %}
 </ul>
 </div>
 {% endblock %}
