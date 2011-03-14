@@ -1,4 +1,5 @@
 from datetime import date, datetime
+from functools import wraps
 from random import choice
 
 from django.core.urlresolvers import reverse
@@ -11,12 +12,13 @@ from noname.models import CompanyName, Voter
 
 SESSIONS_EXPIRY = datetime(2011, 12, 31, 23, 59, 59, 999)
 
+
 def _voter(request):
     """
     does a bunch of things with the request to have a decent voter.
     """
     if "voter" in request.session:
-        return request.session["voter"]
+        return request.session["voter"], False
 
     #### Once per session
 
@@ -29,7 +31,27 @@ def _voter(request):
     voter.save() #so it's guaranteed to have an id
     request.session["voter"] = voter
 
-    return voter
+    return voter, True
+
+
+def logout(request):
+    """
+    Does not use @usevoter on purpose: we don't want a voter object created!
+    """
+    if 'voter' in request.session:
+        del request.session['voter']
+    return HttpResponseRedirect(reverse('index'))
+
+
+def usevoter(view):
+    @wraps(view)
+    def replacement(request, *args, **kwargs):
+        voter, created = _voter(request)
+        if not created:
+            return view(voter, request, *args, **kwargs)
+        return HttpResponseRedirect(reverse('welcome'))
+
+    return replacement
 
 
 def _render(request, templatename, variables):
@@ -87,13 +109,13 @@ class OtherThan(object):
         return self._choosenext(lastseen)
 
 
-def thankyou(request):
-    voter = _voter(request)
+@usevoter
+def thankyou(voter, request):
     return _render(request, 'noname/thankyou.html', {'voter': voter})
 
 
-def otherthan(request, name=''):
-    voter = _voter(request)
+@usevoter
+def otherthan(voter, request, name=''):
     try:
         name = CompanyName.objects.get(name=name)
     except CompanyName.DoesNotExist:
@@ -122,12 +144,12 @@ def _saveforms(request, forms):
             yield True
 
 
-def eval(request, pk):
+@usevoter
+def eval(voter, request, pk):
     #FIXME: XXX XXX XXX
     #check value: must be int. Seems django will fix it otherwise.
     #FIXME: XXX XXX XXX
     #XSS
-    voter = _voter(request)
     companyname = get_object_or_404(CompanyName, pk=pk)
     evaluation = voter.get_evaluation(companyname)
     evaluation.value = request.POST['value']
@@ -136,10 +158,10 @@ def eval(request, pk):
     return _render(request, 'noname/valideval.html', {})
 
 
-def message(request, pk):
+@usevoter
+def message(voter, request, pk):
     #FIXME: XXX XXX XXX
     #XSS
-    voter = _voter(request)
     companyname = get_object_or_404(CompanyName, pk=pk)
     evaluation = voter.get_evaluation(companyname)
     evaluation.message = request.POST['message']
@@ -148,8 +170,8 @@ def message(request, pk):
     return _render(request, 'noname/valideval.html', {})
 
 
-def voterinfo(request):
-    voter = _voter(request)
+@usevoter
+def voterinfo(voter, request):
     print "voterinfo XXX TODO: parse request.POST"
     print request.POST
     voter.optional_nickname = request.POST['nickname']
@@ -159,8 +181,8 @@ def voterinfo(request):
     return _render(request, 'noname/valideval.html', {})
 
 
-def detail(request, pk):
-    voter = _voter(request)
+@usevoter
+def detail(voter, request, pk):
     companyname = get_object_or_404(CompanyName, pk=pk)
     voter.pages_seen.add(companyname)
     evaluation = voter.get_evaluation(companyname)
@@ -230,8 +252,8 @@ def results(request):
     return _render(request, 'noname/results.html', variables)
 
 
-def index(request):
-    voter = _voter(request)
+@usevoter
+def index(voter, request):
     variables = {
         'voter': voter,
         'all_proposed_names': CompanyName.objects.all(),
