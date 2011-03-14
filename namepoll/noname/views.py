@@ -187,10 +187,14 @@ def detail(voter, request, pk):
     voter.pages_seen.add(companyname)
     evaluation = voter.get_evaluation(companyname)
 
-    #seems request.POST can be None safely
-    evalform = EvaluationForm(request.POST, instance=evaluation)
-    voterform = VoterForm(request.POST, instance=voter)
+    if not request.POST:
+        # If this isn't a POST request, we don't use it to fill the form
+        evalform = EvaluationForm(instance=evaluation)
+    else:
+        evalform = EvaluationForm(request.POST, instance=evaluation)
+        voterform = VoterForm(request.POST, instance=voter)
 
+    voterform = VoterForm(request.POST, instance=voter)
     forms = evalform, voterform
 
     #Does NOT commit to DB.
