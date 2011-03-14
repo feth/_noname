@@ -36,9 +36,9 @@ $(document).ready(function(){
     $("span#voterbutton").html("<input type=\"button\" id=\"savevoter\" value=\"Save\"/>")
     $("input#savevoter").click(function () {
         $.post("/noname/voterinfo/",  {
-            nickname: $("input#id_optional_nickname").val(),
-            email: $("input#id_optional_email").val(),
-            info: $("textarea#id_optional_info").val()
+            optional_nickname: $("input#id_optional_nickname").val(),
+            optional_email: $("input#id_optional_email").val(),
+            optional_info: $("textarea#id_optional_info").val()
             }, function(data){
             $("#resultvoter").html(data).css('display', 'inline').fadeOut(1000);
         });

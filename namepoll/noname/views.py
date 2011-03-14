@@ -176,12 +176,11 @@ def message(voter, request, pk):
 
 @usevoter
 def voterinfo(voter, request):
-    print "voterinfo XXX TODO: parse request.POST"
-    print request.POST
-    voter.optional_nickname = request.POST['nickname']
-    voter.optional_email = request.POST['email']
-    voter.optional_info = request.POST['info']
-    voter.save()
+    voterform = VoterForm(request.POST, instance=voter)
+    if voterform.is_valid():
+        voter.save()
+    else:
+        voterform.display_errors = True
     return _render(request, 'noname/valideval.html', {})
 
 
