@@ -1,0 +1,26 @@
+{% extends "noname/page.html" %}
+
+{% block jsfunctions %}
+{% endblock %}
+
+{% block title %}Noname inc.{% endblock %}
+
+{% block body %}
+<div id="contents" style="float: left; width: 50em; border: thin silver solid; margin: 0.5em; padding: 0.5em;">
+<table style="text-align: left; width: 100%;" border="1">
+    <tbody>
+        {% for companyname, value, message in reviews %}
+        <tr>
+            <td style="vertical-align: top;">{{ companyname }}<br>
+            </td>
+            <td style="vertical-align: top;">{{ value }}<br>
+            </td>
+            <td style="vertical-align: top;">{{ message }}<br>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock body%}
+
+{% block nav %}{% include "noname/nav.html" with title="Navigation" navskip="next" only %}{% endblock nav %}
