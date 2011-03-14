@@ -158,9 +158,10 @@ def eval(voter, request, pk):
     #XSS
     companyname = get_object_or_404(CompanyName, pk=pk)
     evaluation = voter.get_evaluation(companyname)
-    evaluation.value = request.POST['value']
+    evaluation.value = int(request.POST['value']) + 1
+    evaluation.date_of_modification = date.today()
     evaluation.save()
-    voter.save()
+    print voter.evaluations.all()
     return _render(request, 'noname/valideval.html', {})
 
 
@@ -171,8 +172,8 @@ def message(voter, request, pk):
     companyname = get_object_or_404(CompanyName, pk=pk)
     evaluation = voter.get_evaluation(companyname)
     evaluation.message = request.POST['message']
+    evaluation.date_of_modification = date.now()
     evaluation.save()
-    voter.save()
     return _render(request, 'noname/valideval.html', {})
 
 
@@ -195,53 +196,15 @@ def detail(voter, request, pk):
     if not request.POST:
         # If this isn't a POST request, we don't use it to fill the form
         evalform = EvaluationForm(instance=evaluation)
-        voterform = VoterForm(instance=voter)
+        evalform.display_errors = True
     else:
         evalform = EvaluationForm(request.POST, instance=evaluation)
-        voterform = VoterForm(request.POST, instance=voter)
-
-    forms = evalform, voterform
-
-    #Does NOT commit to DB.
-    eval_data, voter_data = _saveforms(request, forms)
-
-    voterform.save(commit=False)
-
-    #info that was not supplied in forms
-    if eval_data:
-        evalform.save(commit=False)
-        if evaluation.value == '':
-            evaluation.value = -1
-
-        #manually tweak evaluation
-        evaluation.date_of_modification = date.today()
-
-        #voting is done, let's go to next page
-        voterform.save_m2m()
-        evalform.save_m2m()
-        #BUG: save_m2m should have saved, but the eval is not in db unless this:
-        evaluation.save()
-        other = OtherThan(voter)
-        return other.next(companyname, voted=True)
-
-    if voter_data:
-        voterform.save()
-
-    if request.POST:
-        # Here, the user posted some data but the evalform wasn't valid (see
-        # above) so we display erros. See also EvaluationForm.custom_display.
-        for form in forms:
-            form.display_errors = True
-    else:
-        # Here, the user didn't post any data so it's the first time he sees the
-        # page: we don't display errors.
         evalform.display_errors = False
 
     variables = {
         'companyname': companyname,
         'voter': voter,
         'evalform': evalform,
-        'voterform': voterform,
     }
     return _render(request, 'noname/detail.html', variables)
 

@@ -5,6 +5,7 @@ from django.conf.urls.defaults import patterns, url
 urlpatterns = patterns('noname.views',
     url(r'^$', 'index', name='index'),
     url(r'^detail/(?P<pk>[^/]+)/$', 'detail', name='detail'),
+#    url(r'^item/(?P<pk>[^/]+)/$', 'item', name='item'),
     url(r'^eval/(?P<pk>[^/]+)/$', 'eval', name='eval'),
     url(r'^message/(?P<pk>[^/]+)/$', 'message', name='message'),
     url(r'^otherthan/(?P<name>[^/]+)/$', 'otherthan', name='otherthan'),
