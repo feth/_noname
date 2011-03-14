@@ -32,17 +32,6 @@ $(document).ready(function(){
         });
     });
 
-    //voter part
-    $("span#voterbutton").html("<input type=\"button\" id=\"savevoter\" value=\"Save\"/>")
-    $("input#savevoter").click(function () {
-        $.post("/noname/voterinfo/",  {
-            optional_nickname: $("input#id_optional_nickname").val(),
-            optional_email: $("input#id_optional_email").val(),
-            optional_info: $("textarea#id_optional_info").val()
-            }, function(data){
-            $("#resultvoter").html(data).css('display', 'inline').fadeOut(1000);
-        });
-    });
 
 });
 </script>
@@ -99,14 +88,7 @@ $(document).ready(function(){
 		    {% endcomment %}
                 </div><!--evalform-->
             </fieldset>
-            <fieldset>
-                <legend>Who are you ?</legend>
-                <div id="voterform">
-                    {{ voterform.custom_display }}
-		    <span id="voterbutton"></span>
-		    <span id="resultvoter"></span>
-                </div><!--voterform-->
-            </fieldset>
+
                 <div class="buttons">
                     <input type="submit" class="form" value="Submit"/>
                     <input type="button" class="form" onclick="self.location.href='.'" value="Cancel">
