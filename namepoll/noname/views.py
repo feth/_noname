@@ -195,11 +195,11 @@ def detail(voter, request, pk):
     if not request.POST:
         # If this isn't a POST request, we don't use it to fill the form
         evalform = EvaluationForm(instance=evaluation)
+        voterform = VoterForm(instance=voter)
     else:
         evalform = EvaluationForm(request.POST, instance=evaluation)
         voterform = VoterForm(request.POST, instance=voter)
 
-    voterform = VoterForm(request.POST, instance=voter)
     forms = evalform, voterform
 
     #Does NOT commit to DB.
