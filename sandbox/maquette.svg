@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.47 r22583"
-   sodipodi:docname="New document 1">
+   sodipodi:docname="maquette.svg">
   <defs
      id="defs4">
     <linearGradient
@@ -81,6 +81,13 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 0.5 : 1"
        sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3702"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -89,15 +96,15 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497475"
-     inkscape:cx="625.934"
-     inkscape:cy="698.48422"
+     inkscape:zoom="0.9899495"
+     inkscape:cx="172.24184"
+     inkscape:cy="812.1245"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1366"
+     inkscape:window-width="1918"
      inkscape:window-height="1059"
-     inkscape:window-x="552"
+     inkscape:window-x="0"
      inkscape:window-y="19"
      inkscape:window-maximized="0" />
   <metadata
@@ -241,13 +248,13 @@
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
-       x="497.92142"
+       x="505.46942"
        y="429.79922"
        id="text3952"><tspan
          sodipodi:role="line"
          id="tspan3954"
-         x="497.92142"
-         y="429.79922">Submit</tspan></text>
+         x="505.46942"
+         y="429.79922">Next</tspan></text>
     <rect
        y="142.81464"
        x="202.38101"
@@ -354,7 +361,7 @@
            height="15"
            x="130.35715"
            y="132.71933" /></flowRegion><flowPara
-         id="flowPara4016"></flowPara></flowRoot>    <rect
+         id="flowPara4016" /></flowRoot>    <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#11303d;stroke-width:0.93749064;stroke-opacity:1"
        id="rect4044"
        width="0.41965222"
@@ -581,5 +588,39 @@
        sodipodi:ry="3.2829957"
        d="m 128.79445,53.573853 a 3.2829957,3.2829957 0 1 1 -6.56599,0 3.2829957,3.2829957 0 1 1 6.56599,0 z"
        transform="translate(418,400)" />
+    <rect
+       y="417.29855"
+       x="428.85037"
+       height="15.657365"
+       width="58.083771"
+       id="rect3688"
+       style="fill:#cccccc;fill-opacity:1;stroke:#010101;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <text
+       id="text3690"
+       y="429.79922"
+       x="435.92142"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       xml:space="preserve"><tspan
+         y="429.79922"
+         x="435.92142"
+         id="tspan3692"
+         sodipodi:role="line">Submit</tspan></text>
+    <rect
+       style="fill:#cccccc;fill-opacity:1;stroke:#010101;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3950-9"
+       width="58.083771"
+       height="15.657365"
+       x="493.20697"
+       y="98.020576" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="507.82602"
+       y="110.52125"
+       id="text3952-3"><tspan
+         sodipodi:role="line"
+         id="tspan3954-3"
+         x="507.82602"
+         y="110.52125">Next</tspan></text>
   </g>
 </svg>
