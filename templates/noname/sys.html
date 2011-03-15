@@ -5,7 +5,6 @@
 <ul>
 <li>Server time: {% now "jS F Y H:i" %}</li>
 <li>Visitor id: {{ voter.id }}</li>
-<li><a href="{% url profile voter.uuid %}">Your profile</a></li>
 {% with seen=voter.pages_seen.all %}
 {% if seen %}
 <li>Pages visited:

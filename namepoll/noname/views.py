@@ -239,7 +239,8 @@ def review(voter, request):
         for evaluation in voter.evaluations.all()
         )
 
-    return _render(request, 'noname/review.html', {'reviews': reviews})
+    variables = {'reviews': reviews, 'voter': voter}
+    return _render(request, 'noname/review.html', variables)
 
 
 def index(request):
