@@ -138,3 +138,18 @@ div#ident:hover
 {
 border: thin inset;
 }
+table.review
+{
+text-align: left;
+width: 100%;
+border: thin silver solid;
+background-color:#ccc;
+}
+table.review td
+{
+border: thin inset;
+}
+table.review tr:hover
+{
+background-color:#fff;
+}

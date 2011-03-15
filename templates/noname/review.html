@@ -7,20 +7,8 @@
 
 {% block body %}
 <div class="main" id="contents">
-<table style="text-align: left; width: 100%;" border="1">
-    <tbody>
-        {% for companyname, value, message in reviews %}
-        <tr>
-            <td style="vertical-align: top;">{{ companyname }}<br>
-            </td>
-            <td style="vertical-align: top;">{{ value }}<br>
-            </td>
-            <td style="vertical-align: top;">{{ message }}<br>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% load nonametags %}
+{% table reviews "review" "review" %}
 {% endblock body%}
 
 {% block nav %}{% include "noname/nav.html" with title="Navigation" navskip="next review" voter=voter only %}{% endblock nav %}
