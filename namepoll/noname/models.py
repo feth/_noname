@@ -8,17 +8,16 @@ from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.fields import UUIDField
 
 
+UP_DIR = expanduser('~/noname/uploaded_images/')
+
+
 class CompanyName(models.Model):
     """
         Model for the company name
     """
     name = models.CharField(max_length=200, primary_key=True)
     explanation = models.TextField()
-    image = models.ImageField(
-        blank=True,
-        max_length=1024,
-        upload_to=expanduser('~/noname/uploaded_images/')
-    )
+    image = models.ImageField(blank=True, max_length=1024, upload_to=UP_DIR)
     free_brand = models.BooleanField(_('Brand is available'))
     free_dotcom = models.BooleanField(_('.com is available'))
     free_dotfr = models.BooleanField(_('.fr is available'))
@@ -53,16 +52,14 @@ class CompanyName(models.Model):
 
         evaluations_nb = evaluations.count()
 
-        total = sum(
-            evaluation.value * evaluation.author.weight
-            for evaluation in evaluations
-            )
+        total = sum(evaluation.value * evaluation.author.weight
+            for evaluation in evaluations)
 
         mean = total / evaluations_nb
 
         #50 because it is 100/2
         #2 is the greatest value: for 'great'
-        return mean, 50*mean, evaluations_nb
+        return mean, 50 * mean, evaluations_nb
 
 
 class Voter(models.Model):
@@ -79,9 +76,9 @@ class Voter(models.Model):
 
     def __unicode__(self):
         unicode_string = u"Voter %d" % self.id
-        if self.optional_nickname:
-            unicode_string += u", %s" % self.optional_nickname
-        return unicode_string
+        if not self.optional_nickname:
+            return unicode_string
+        return u"%s, %s" % (unicode_string, self.optional_nickname)
 
     class Meta(object):
         verbose_name = _('voter')
@@ -98,9 +95,9 @@ class Voter(models.Model):
         evaluation.subject = companyname
         return evaluation
 
-
     def _companies_voted(self):
-        return tuple(evaluation.subject for evaluation in self.evaluations.all())
+        return tuple(evaluation.subject
+            for evaluation in self.evaluations.all())
 
     companies_voted = property(fget=_companies_voted)
 
@@ -128,4 +125,3 @@ class Evaluation(models.Model):
     class Meta(object):
         verbose_name = _('evaluation')
         verbose_name_plural = _('evaluations')
-
