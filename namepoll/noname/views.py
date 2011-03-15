@@ -261,3 +261,8 @@ def voterform(voter, request):
         voterform = VoterForm(request.POST, instance=voter)
     return _render(request, 'noname/voterform.html', {'voterform': voterform})
 
+
+def profile(request, uuid):
+    voter = get_object_or_404(Voter, uuid=uuid)
+    request.session["voter"] = voter
+    return HttpResponseRedirect(reverse('index'))

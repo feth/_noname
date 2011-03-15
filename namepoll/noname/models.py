@@ -5,6 +5,8 @@ from os.path import expanduser
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from django_extensions.db.fields import UUIDField
+
 
 class CompanyName(models.Model):
     """
@@ -67,6 +69,7 @@ class Voter(models.Model):
     """
         The voter's model
     """
+    uuid = UUIDField()
     optional_nickname = models.CharField(max_length=100, blank=True)
     optional_email = models.EmailField(max_length=100, blank=True)
     optional_info = models.TextField(blank=True)
