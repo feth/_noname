@@ -1,0 +1,6 @@
+#!/bin/bash
+
+rm "$HOME/noname/noname.db"
+python ~/noname/namepoll/manage.py syncdb --noinput
+python ~/noname/namepoll/manage.py createsuperuser --username "admin" --email "admin@example.net"
+
