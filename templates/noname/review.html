@@ -7,8 +7,7 @@
 
 {% block body %}
 <div class="main" id="contents">
-{% load nonametags %}
-{% table reviews "review" "review" %}
+{% include "table.html" with id="review" class="review" rows=reviews %}
 {% endblock body%}
 
 {% block nav %}{% include "noname/nav.html" with title="Navigation" navskip="next review" voter=voter only %}{% endblock nav %}
