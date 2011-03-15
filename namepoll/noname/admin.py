@@ -13,20 +13,11 @@ class VoterAdmin(admin.ModelAdmin):
 
 
 class NameAdmin(admin.ModelAdmin):
-    fieldsets = (
-            (None, {
-             'fields': ('name',)
-             }
-            ),
-            ('Availability', {
-             'fields': ('free_brand', 'free_dotnet', 'free_dotcom', 'free_dotfr')
-             }
-            ),
-            ('Optional info', {
-            'fields': ('explanation', 'image')
-            }
-            )
-            )
+    fieldsets = ((None, {'fields': ('name',)}),
+            ('Availability', {'fields':
+                ('free_brand', 'free_dotnet', 'free_dotcom', 'free_dotfr')}),
+            ('Optional info', {'fields': ('explanation', 'image')}))
+
     inlines = [EvaluationAdmin]
     list_display = ('name',)
 
