@@ -1,0 +1,6 @@
+<table{% if id %} id="{{ id }}"{% endif %}{% if class %} class="{{ class }}"{% endif %}>
+{% for row in rows %}
+<tr>{% for cell in row %}
+<td>{{ cell }}</td>{% endfor %}
+</tr>{% endfor %}
+</table>
