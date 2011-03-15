@@ -8,9 +8,9 @@
 
 function loaditem() {
 	$("div#item").load("{% url item companyname %}", function(data){
-		$("div#item").css('display', 'none').fadeIn(300);
 		$.fn.rating.options.starWidth = 64;
 		$('input.star').rating();
+		$('#item .trigger').click(noname['trigger']['click']);
 
 		// bind stars to sending rating
 		// can do better, but \\S* wildcard seems not to work. why?
