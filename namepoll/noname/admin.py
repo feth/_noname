@@ -4,6 +4,7 @@ from django.contrib import admin
 
 class EvaluationAdmin(admin.StackedInline):
     model = Evaluation
+    extra = 0
 
 
 class VoterAdmin(admin.ModelAdmin):
