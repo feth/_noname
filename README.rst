@@ -7,6 +7,7 @@ depends
 =======
 
 * django 1.3 beta
+* django-extensions
 
 basic setup
 ===========

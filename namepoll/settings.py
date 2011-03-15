@@ -109,5 +109,6 @@ INSTALLED_APPS = (
     'noname',
     #it needs static files, but we could maybe point STATIC_URL to another server
     'django.contrib.staticfiles',
+    'django_extensions',
 
 )
