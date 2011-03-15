@@ -10,9 +10,17 @@
 <!--
     $(document).ready(function(){
         $('.trigger').click(noname['trigger']['click']);
-	{% block voter_inf_js %}
+	{% block voter_info_js %}
+	function setup_voterinfo() {
+		$("div#voterinfo").hide();
+		$("div#ident").show();
+	}
+        $("div#ident").click(function(){
+		$("div#voterinfo").show();
+		$("div#ident").hide();
+	});
         $("div#voterform").load("{% url voterform %}", function(){
-	    $("div#voterform").css('display', 'none').fadeIn(1000);
+            setup_voterinfo();
 	    $("input#savevoter").click(function(){
             var data = {
                      optional_nickname: $("input#id_optional_nickname").val(),
@@ -20,13 +28,13 @@
                      optional_info: $("textarea#id_optional_info").val(),
 		     }
                 $.post("{% url voterinfo %}",  data, function(result) {
-                    $("#resultvoter").html(result).css('display', 'inline').fadeOut(1000);
+                    $("#resultvoter").html(result).css('display', 'inline').fadeOut(1000, setup_voterinfo);
 		});
 
 	    });
 
 	});
-	{% endblock voter_inf_js %}
+	{% endblock voter_info_js %}
     });
     -->
 </script>
@@ -41,6 +49,6 @@
 {%block body %}{% endblock %}
 {% block sys %}{% include "noname/sys.html" with title="Context" voter=voter only %}{% endblock sys %}
 {% block nav %}{% include "noname/nav.html" with title="Navigation" only %}{% endblock nav %}
-{% block voter_info %}{% include "noname/voter_info.html" with title="About you" only %}{% endblock voter_info %}
+{% block voter_info %}{% include "noname/voter_info.html" with title="About you" voter=voter only %}{% endblock voter_info %}
 </body>
 </html>

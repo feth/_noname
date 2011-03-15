@@ -1,6 +1,14 @@
 {% extends "noname/foldable.html" %}
 
 {% block content %}
+You can let us know a little about yourself if you care.
+<div id="ident">
+<ul>
+<li class="ident", id="nick">nickname: {{ voter.optional_nickname}}</li>
+<li class="ident", id="email">e-mail: {{ voter.optional_email }}</li>
+<li class="ident", id="info">free form (tell us about your job position and so on): {{ voter.optional_info|truncatewords:10}}</li>
+</ul>
+</div>
 <div id="voterinfo">
 <form id="voter">
     <fieldset>

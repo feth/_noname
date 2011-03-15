@@ -115,3 +115,13 @@ a#nextitem:hover
 {
 background-color:#fff;
 }
+div#ident
+{
+padding: 5px;
+border: thin outset;
+background-color:#ddd;
+}
+div#ident:hover
+{
+border: thin inset;
+}
